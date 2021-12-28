@@ -20,7 +20,7 @@ function Header(props) {
         >
           {title}
         </Typography>
-        <Link href="/log/login" passHref>
+        <Link href="/app/account" passHref>
           <Button variant="outlined" size="small">
             Open App
           </Button>

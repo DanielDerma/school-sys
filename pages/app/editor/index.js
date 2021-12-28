@@ -3,8 +3,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 
 export default function Editor() {
   const { currentUser, logout } = useAuth();
-  console.log(currentUser);
 
-  return <>soy Editor itnki</>;
+  return <>soy editor</>;
 }
 Editor.Layout = Layout;

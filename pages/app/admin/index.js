@@ -3,17 +3,25 @@ import Layout from "../../../components/AppLayout";
 import Head from "next/head";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useRouter } from "next/router";
+import Table from "../../../components/DataTable";
+import { Button } from "@mui/material";
+
+import {
+  students,
+  directs,
+  instructors,
+  admins,
+  infoPropsStudent,
+  infoPropsInstructor,
+} from "../../../lib/DataTest";
 
 export default function Admin() {
   const { currentUser, logout } = useAuth();
   const router = useRouter();
 
-  console.log(currentUser);
-
   useEffect(() => {
     !currentUser && router.replace("/log/login");
-  }),
-    [currentUser];
+  }, [currentUser]);
 
   return (
     <>
@@ -21,8 +29,9 @@ export default function Admin() {
         <title>Admin</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      soy admin itnki
+      <Table rows={students} infoProps={infoPropsStudent} isSiiMain={false} />
     </>
   );
 }
+
 Admin.Layout = Layout;

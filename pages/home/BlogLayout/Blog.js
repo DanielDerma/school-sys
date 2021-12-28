@@ -60,13 +60,13 @@ const sidebar = {
 
 const theme = createTheme();
 
-export default function Blog({ stateUser }) {
+export default function Blog() {
   const handleApp = () => {};
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title="PREPA 7" sections={sections} />
+        <Header title="PREPA 8" sections={sections} />
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
           <Grid container spacing={4}>

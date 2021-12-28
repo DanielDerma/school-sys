@@ -13,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { mainListItems } from "./Functions";
-import { Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import Link from "@mui/material/Link";
 const drawerWidth = 240;
 
@@ -33,6 +33,11 @@ function Copyright() {
     </Typography>
   );
 }
+
+const CopyrightA = styled(Copyright)(({ theme }) => ({
+  position: "absolute",
+  bottom: theme.spacing(2),
+}));
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -129,7 +134,7 @@ export default function MiniDrawer({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            PREPA 8
           </Typography>
         </Toolbar>
       </AppBar>
@@ -161,7 +166,9 @@ export default function MiniDrawer({ children }) {
       >
         <DrawerHeader />
         <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
-          {children}
+          <Grid container spacing={3}>
+            {children}
+          </Grid>
         </Container>
         <Copyright sx={{ pt: 4 }} />
       </Box>

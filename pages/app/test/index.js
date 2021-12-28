@@ -21,7 +21,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { Button, TableFooter } from "@mui/material";
-import Search from "./Search";
+
 function createData(name, calories, fat, carbs, protein) {
   return {
     name,
@@ -181,8 +181,14 @@ const EnhancedTableMenu = () => {
         pr: { xs: 1, sm: 1 },
       }}
     >
-      <Search />
-      <Button variant="outlined">Agregar Elementos</Button>
+      <Typography
+        sx={{ flex: "1 1 100%" }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        Menu
+      </Typography>
     </Toolbar>
   );
 };
@@ -195,9 +201,14 @@ const EnhancedTableTabs = (props) => {
         pr: { xs: 1, sm: 1 },
       }}
     >
-      <Button variant="outlined">Direc</Button>
-      <Button variant="outlined">Profes</Button>
-      <Button variant="outlined">Alum</Button>
+      <Typography
+        sx={{ flex: "1 1 100%" }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        Tabs
+      </Typography>
     </Toolbar>
   );
 };

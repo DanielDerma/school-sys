@@ -11,30 +11,11 @@ export default function Dasboard() {
   const { currentUser, logout } = useAuth();
   const router = useRouter();
 
-  console.log(currentUser);
-
   useEffect(() => {
     !currentUser && router.replace("/log/login");
   }),
     [currentUser];
 
-  return (
-    <>
-      <Grid container spacing={3}>
-        <Table />
-        <Fab
-          color="primary"
-          aria-label="add"
-          sx={{
-            position: "absolute",
-            bottom: "3em",
-            right: "3em",
-          }}
-        >
-          <AddIcon />
-        </Fab>
-      </Grid>
-    </>
-  );
+  return <>hola</>;
 }
 Dasboard.Layout = Layout;

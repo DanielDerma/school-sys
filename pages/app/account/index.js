@@ -32,8 +32,6 @@ const Account = () => {
   const { currentUser, logout } = useAuth();
   const router = useRouter();
 
-  console.log(currentUser);
-
   useEffect(() => {
     !currentUser && router.replace("/log/login");
   }),
@@ -44,38 +42,37 @@ const Account = () => {
 
   return (
     <>
-      <Grid container spacing={3}>
-        {/* Recent Deposits */}
-        <Grid item xs={12} md={4} lg={3}>
-          <Paper
+      {/* Recent Deposits */}
+      <Grid item xs={12} md={4} lg={3}>
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: 240,
+            alignItems: "center",
+          }}
+        >
+          <Avatar
             sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              height: 240,
-              alignItems: "center",
+              bgcolor: deepOrange[500],
+              width: 208,
+              height: 208,
+              fontSize: 160,
             }}
           >
-            <Avatar
-              sx={{
-                bgcolor: deepOrange[500],
-                width: 208,
-                height: 208,
-                fontSize: 160,
-              }}
-            >
-              N
-            </Avatar>
-          </Paper>
-        </Grid>
-        {/* Chart */}
-        <Grid item xs={12} md={8} lg={9}>
-          <TableSet rows={rows} />
-        </Grid>
-        <Button onClick={handleSignOut} color="error" variant="contained">
-          Sign Out
-        </Button>
+            N
+          </Avatar>
+        </Paper>
       </Grid>
+      {/* Chart */}
+      <Grid item xs={12} md={8} lg={9}>
+        <TableSet rows={rows} />
+      </Grid>
+
+      <Button onClick={handleSignOut} color="error" variant="contained">
+        Sign Out
+      </Button>
     </>
   );
 };

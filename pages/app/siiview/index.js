@@ -7,8 +7,6 @@ export default function SiiView() {
   const { currentUser, logout } = useAuth();
   const router = useRouter();
 
-  console.log(currentUser);
-
   useEffect(() => {
     !currentUser && router.replace("/log/login");
   }),
