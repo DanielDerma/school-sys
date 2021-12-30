@@ -29,7 +29,8 @@ export default function Admin() {
         <title>Admin</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <Table rows={students} infoProps={infoPropsStudent} isSiiMain={false} />
+
+      <Table data={students} infoProps={infoPropsStudent} isSiiMain={false} />
     </>
   );
 }
