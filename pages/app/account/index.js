@@ -8,6 +8,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 
 import TableSet from "../../../components/Table";
 import { useRouter } from "next/router";
+import { Box } from "@mui/system";
 function createData(name, calories, fat) {
   return { name, calories, fat };
 }
@@ -36,12 +37,17 @@ const Account = () => {
     !currentUser && router.replace("/log/login");
   }),
     [currentUser];
+
   const handleSignOut = () => {
     logout();
   };
 
+  const goHome = () => {
+    router.push("/home");
+  };
+
   return (
-    <>
+    <Grid container spacing={3} justifyContent="center">
       {/* Recent Deposits */}
       <Grid item xs={12} md={4} lg={3}>
         <Paper
@@ -69,11 +75,23 @@ const Account = () => {
       <Grid item xs={12} md={8} lg={9}>
         <TableSet rows={rows} />
       </Grid>
-
-      <Button onClick={handleSignOut} color="error" variant="contained">
-        Sign Out
+      <Button
+        color="secondary"
+        variant="contained"
+        onClick={goHome}
+        sx={{ mt: 4 }}
+      >
+        Ir a Pagina Principal
       </Button>
-    </>
+      <Button
+        onClick={handleSignOut}
+        color="error"
+        variant="contained"
+        sx={{ mt: 4, ml: 2 }}
+      >
+        Cerrar Sesion
+      </Button>
+    </Grid>
   );
 };
 

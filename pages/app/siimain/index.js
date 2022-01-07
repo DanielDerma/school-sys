@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Layout from "../../../components/AppLayout";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useRouter } from "next/router";
+import DataTable from "../../../components/DataTable";
 
 export default function SiiMain() {
   const { currentUser } = useAuth();
@@ -9,6 +10,10 @@ export default function SiiMain() {
   useEffect(() => {
     !currentUser && router.replace("/log/login");
   });
-  return <> soy siimain</>;
+  return (
+    <>
+      <DataTable />
+    </>
+  );
 }
 SiiMain.Layout = Layout;

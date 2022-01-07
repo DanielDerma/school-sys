@@ -5,6 +5,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import EmailIcon from "@mui/icons-material/Email";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import SchoolIcon from "@mui/icons-material/School";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
 import Link from "next/link";
 
 export const mainListItems = (
@@ -36,7 +37,7 @@ export const mainListItems = (
     <Link href="editor">
       <ListItem button key={"Editor"}>
         <ListItemIcon>
-          <EmailIcon />
+          <NewspaperIcon />
         </ListItemIcon>
         <ListItemText primary={"Editor"} />
       </ListItem>

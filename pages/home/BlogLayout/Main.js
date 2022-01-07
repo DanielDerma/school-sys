@@ -1,3 +1,4 @@
+import { Divider, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 function Main() {
@@ -11,7 +12,12 @@ function Main() {
           py: 3,
         },
       }}
-    ></Grid>
+    >
+      <Typography variant="h6" gutterBottom>
+        Start
+      </Typography>
+      <Divider />
+    </Grid>
   );
 }
 

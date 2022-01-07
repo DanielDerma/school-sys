@@ -1,19 +1,11 @@
 import { useEffect } from "react";
 import Layout from "../../../components/AppLayout";
 import Head from "next/head";
+
 import { useAuth } from "../../../contexts/AuthContext";
 import { useRouter } from "next/router";
-import Table from "../../../components/DataTable";
-import { Button } from "@mui/material";
-
-import {
-  students,
-  directs,
-  instructors,
-  admins,
-  infoPropsStudent,
-  infoPropsInstructor,
-} from "../../../lib/DataTest";
+import DataTable from "../../../components/DataTable";
+import { Grid } from "@mui/material";
 
 export default function Admin() {
   const { currentUser, logout } = useAuth();
@@ -24,14 +16,15 @@ export default function Admin() {
   }, [currentUser]);
 
   return (
-    <>
+    <Grid container spacing={3}>
       <Head>
         <title>Admin</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-
-      <Table data={students} infoProps={infoPropsStudent} isSiiMain={false} />
-    </>
+      <Grid item xs={12}>
+        <DataTable />
+      </Grid>
+    </Grid>
   );
 }
 
