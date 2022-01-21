@@ -5,15 +5,30 @@ import Head from "next/head";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useRouter } from "next/router";
 import DataTable from "../../../components/DataTable";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+
+const tabsAdmin = [
+  {
+    title: "Admin",
+    hash: "admin",
+  },
+  {
+    title: "profes",
+    hash: "instructor",
+  },
+  {
+    title: "alum",
+    hash: "student",
+  },
+];
 
 export default function Admin() {
-  const { currentUser, logout } = useAuth();
+  const { currentUser } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     !currentUser && router.replace("/log/login");
-  }, [currentUser]);
+  }, [currentUser, router]);
 
   return (
     <Grid container spacing={3}>

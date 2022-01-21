@@ -19,7 +19,7 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { Button, TableFooter } from "@mui/material";
+import { Button, Skeleton, TableFooter } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
@@ -63,6 +63,7 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort,
     infoProps,
+    loading,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -93,7 +94,9 @@ function EnhancedTableHead(props) {
             inputProps={{
               "aria-label": "select all desserts",
             }}
+            disabled={loading}
           />
+          {/* <Skeleton variant="text" /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -102,6 +105,8 @@ function EnhancedTableHead(props) {
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
+            {/* <Skeleton variant="text" /> */}
+
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
@@ -131,7 +136,59 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable({ data, infoProps, isSiiMain }) {
+const DataLoader = ({ isSiiMain }) => {
+  const data3 = [[], [], [], [], [], []];
+  return data3.map((elem, index) => (
+    <TableRow key={index}>
+      <TableCell padding="checkbox">
+        <Checkbox disabled={false} />
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        <Skeleton variant="text" />
+      </TableCell>
+      <TableCell>
+        <Skeleton variant="text" />
+      </TableCell>
+      <TableCell>
+        <Skeleton variant="text" />
+      </TableCell>
+      <TableCell>
+        <Skeleton variant="text" />
+      </TableCell>
+      <TableCell>
+        <Skeleton variant="text" />
+      </TableCell>
+      <TableCell>
+        <Skeleton variant="text" />
+      </TableCell>
+      <TableCell>
+        <Skeleton variant="text" />
+      </TableCell>
+      <TableCell>
+        <Skeleton variant="text" />
+      </TableCell>
+
+      {!isSiiMain ? (
+        <TableCell align="center">
+          <Button>
+            <Skeleton variant="text" sx={{ width: "30px" }} />
+          </Button>
+          <Button color="secondary">
+            <Skeleton variant="text" sx={{ width: "30px" }} />
+          </Button>
+        </TableCell>
+      ) : (
+        <TableCell align="left">
+          <Button>
+            <Skeleton variant="text" />
+          </Button>
+        </TableCell>
+      )}
+    </TableRow>
+  ));
+};
+
+export default function EnhancedTable({ data, infoProps, isSiiMain, loading }) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("id");
   const [selected, setSelected] = useState([]);
@@ -203,73 +260,74 @@ export default function EnhancedTable({ data, infoProps, isSiiMain }) {
           onRequestSort={handleRequestSort}
           rowCount={data.length}
           infoProps={infoProps}
+          loading={loading}
         />
         <TableBody>
           {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-          {stableSort(data, getComparator(order, orderBy))
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row, index) => {
-              const isItemSelected = isSelected(row.id);
-              const labelId = `enhanced-table-checkbox-${index}`;
+          {!loading ? (
+            stableSort(data, getComparator(order, orderBy))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => {
+                const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-              return (
-                <TableRow
-                  hover
-                  // role="checkbox"
-                  aria-checked={isItemSelected}
-                  tabIndex={-1}
-                  key={row.id}
-                  selected={isItemSelected}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      color="primary"
-                      checked={isItemSelected}
-                      onClick={(event) => handleClick(event, row.id)}
-                      inputProps={{
-                        "aria-labelledby": labelId,
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell
-                    component="th"
-                    id={labelId}
-                    scope="row"
-                    padding="none"
+                return (
+                  <TableRow
+                    hover
+                    // role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.id}
+                    selected={isItemSelected}
                   >
-                    {row.id}
-                  </TableCell>
-                  <TableCell>{row.first_name}</TableCell>
-                  <TableCell>{row.last_name}</TableCell>
-                  <TableCell>{row.gender}</TableCell>
-                  <TableCell>{row.age}</TableCell>
-                  <TableCell>{row.contact_add}</TableCell>
-                  <TableCell>
-                    {row.ins_email ? row.ins_email : row.stud_email}
-                  </TableCell>
-                  <TableCell>
-                    {row.ins_pass ? row.ins_pass : row.stud_pass}
-                  </TableCell>
-                  {!isSiiMain ? (
-                    <TableCell align="center">
-                      <Button>
-                        <EditOutlinedIcon fontSize="small" />
-                      </Button>
-                      <Button color="secondary">
-                        <CloseOutlinedIcon fontSize="small" />
-                      </Button>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        checked={isItemSelected}
+                        onClick={(event) => handleClick(event, row.id)}
+                        inputProps={{
+                          "aria-labelledby": labelId,
+                        }}
+                      />
                     </TableCell>
-                  ) : (
-                    <TableCell align="left" sx={{ pl: 4.5 }}>
-                      <Button>
-                        <SchoolOutlinedIcon fontSize="medium" />
-                      </Button>
+                    <TableCell
+                      component="th"
+                      id={labelId}
+                      scope="row"
+                      padding="none"
+                    >
+                      {row.id}
                     </TableCell>
-                  )}
-                </TableRow>
-              );
-            })}
+                    <TableCell>{row.first_name}</TableCell>
+                    <TableCell>{row.last_name}</TableCell>
+                    <TableCell>{row.gender}</TableCell>
+                    <TableCell>{row.age}</TableCell>
+                    <TableCell>{row.contact_add}</TableCell>
+                    <TableCell>{row.email}</TableCell>
+                    <TableCell type="password">{row.pass}</TableCell>
+                    {!isSiiMain ? (
+                      <TableCell align="center">
+                        <Button>
+                          <EditOutlinedIcon fontSize="small" />
+                        </Button>
+                        <Button color="secondary">
+                          <CloseOutlinedIcon fontSize="small" />
+                        </Button>
+                      </TableCell>
+                    ) : (
+                      <TableCell align="left" sx={{ pl: 4.5 }}>
+                        <Button>
+                          <SchoolOutlinedIcon fontSize="medium" />
+                        </Button>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                );
+              })
+          ) : (
+            <DataLoader isSiiMain={isSiiMain} loading={loading} />
+          )}
           {emptyRows > 0 && (
             <TableRow
               style={{
@@ -282,14 +340,16 @@ export default function EnhancedTable({ data, infoProps, isSiiMain }) {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              count={data.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+            {!loading && (
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                count={data.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            )}
           </TableRow>
         </TableFooter>
       </Table>

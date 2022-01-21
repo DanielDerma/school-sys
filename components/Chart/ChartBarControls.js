@@ -11,66 +11,101 @@ import {
 } from "@mui/material";
 
 const ChartBarControls = () => {
-  const [age, setAge] = useState("");
+  const [ing, setIng] = useState(1);
+  const [time, setTime] = useState(1);
+  const [year, setYear] = useState(1);
+  const [grade, setGrade] = useState(1);
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleIng = (event) => {
+    setIng(event.target.value);
   };
+
+  const handleTime = (event) => {
+    setTime(event.target.value);
+  };
+
+  const handleYear = (event) => {
+    setYear(event.target.value);
+  };
+
+  const handleGrade = (event) => {
+    setGrade(event.target.value);
+  };
+
   return (
     <Box className="">
-      <Typography>Porcentaje Aprobatorio</Typography>
+      <Typography>Control de grafica</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6} lg={12}>
           <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
             <InputLabel id="demo-simple-select-standard-label">
-              Seleccion de periodo
+              Ingeniería
             </InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
-              value={age}
-              onChange={handleChange}
+              value={ing}
+              onChange={handleIng}
               // label="Seleccion de periodo"
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={1}>Electromecánica</MenuItem>
+              <MenuItem value={2}>Gestión Empresarial</MenuItem>
+              <MenuItem value={3}>Energías Renovables</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={6} md={6} lg={6}>
           <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
             <InputLabel id="demo-simple-select-standard-label">
-              Seleccion de periodo
+              Periodo
             </InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
-              value={age}
-              onChange={handleChange}
+              value={time}
+              onChange={handleTime}
               // label="Seleccion de periodo"
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={1}>AGO-DIC/2021</MenuItem>
+              <MenuItem value={2}>ENE-JUN/2021</MenuItem>
+              <MenuItem value={3}>AGO-DIC/2020</MenuItem>
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={6} md={6} lg={6}>
+        <Grid item xs={6} md={6} lg={3}>
           <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
             <InputLabel id="demo-simple-select-standard-label">
-              Seleccion de periodo
+              Grupo
             </InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
-              value={age}
-              onChange={handleChange}
+              value={grade}
+              onChange={handleGrade}
               // label="Seleccion de periodo"
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>asdf asd fas df</MenuItem>
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={3}>5</MenuItem>
+              <MenuItem value={3}>7</MenuItem>
+              <MenuItem value={3}>9</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={6} md={6} lg={3}>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
+            <InputLabel id="demo-simple-select-standard-label">
+              Grado
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={year}
+              onChange={handleYear}
+              // label="Seleccion de periodo"
+            >
+              <MenuItem value={1}>A</MenuItem>
+              <MenuItem value={2}>B</MenuItem>
             </Select>
           </FormControl>
         </Grid>

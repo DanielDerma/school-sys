@@ -1,51 +1,57 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Layout from "../../../components/AppLayout";
 import { Avatar, Button } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import { useAuth } from "../../../contexts/AuthContext";
-
 import TableSet from "../../../components/Table";
 import { useRouter } from "next/router";
-import { Box } from "@mui/system";
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
-
-const rows = [
-  createData("Cupcake", 305, 3.7),
-  createData("Donut", 452, 25.0),
-  createData("Eclair", 262, 16.0),
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Gingerbread", 356, 16.0),
-  createData("Honeycomb", 408, 3.2),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Jelly Bean", 375, 0.0),
-  createData("KitKat", 518, 26.0),
-  createData("Lollipop", 392, 0.2),
-  createData("Marshmallow", 318, 0),
-  createData("Nougat", 360, 19.0),
-  createData("Oreo", 437, 18.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
 
 const Account = () => {
   const { currentUser, logout } = useAuth();
   const router = useRouter();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const labelsAccount = [
+    "ID",
+    "Primer Nombre",
+    "Apellidos",
+    "Genero",
+    "Edad",
+    "Número",
+    "Correo",
+    "Contraseña",
+  ];
+
+  const fetchRows = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:3000/api/only-student");
+      const data = await response.json();
+      setLoading(false);
+      setData(data);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     !currentUser && router.replace("/log/login");
-  }),
-    [currentUser];
+    if (currentUser) {
+      fetchRows();
+    }
+  }, [currentUser, router]);
 
-  const handleSignOut = () => {
+  function handleSignOut() {
     logout();
-  };
+  }
 
-  const goHome = () => {
+  function goHome() {
     router.push("/home");
-  };
-
+  }
   return (
     <Grid container spacing={3} justifyContent="center">
       {/* Recent Deposits */}
@@ -73,7 +79,7 @@ const Account = () => {
       </Grid>
       {/* Chart */}
       <Grid item xs={12} md={8} lg={9}>
-        <TableSet rows={rows} />
+        <TableSet loading={loading} data={data} labels={labelsAccount} />
       </Grid>
       <Button
         color="secondary"

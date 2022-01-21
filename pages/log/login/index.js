@@ -101,14 +101,16 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              {/* <Link href="#" variant="body2">
-                Forgot password?
-              </Link> */}
+              <Link href="/home" variant="body2" passHref>
+                <Button variant="outlined" color="secondary" size="small">
+                  Ir a Inicio
+                </Button>
+              </Link>
             </Grid>
             <Grid item>
               <Link href="/log/sign" passHref>
                 <Button variant="outlined" size="small">
-                  Create Account
+                  Crear Cuenta
                 </Button>
               </Link>
             </Grid>
