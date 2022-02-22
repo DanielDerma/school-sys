@@ -15,6 +15,7 @@ import Link from "next/link";
 import Layout from "../../../components/LogLayout";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useRouter } from "next/router";
+import { Alert } from "@mui/material";
 
 function Copyright(props) {
   return (
@@ -108,13 +109,20 @@ export default function Login() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/log/sign" passHref>
-                <Button variant="outlined" size="small">
-                  Crear Cuenta
-                </Button>
-              </Link>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => alert("hola")}
+              >
+                aspirantes
+              </Button>
             </Grid>
           </Grid>
+          <Alert severity="info" sx={{ mt: 2 }}>
+            Acude a Dpto. Desarrollo Académico por tu correo de acceso y
+            contraseña.
+          </Alert>
+
           <Copyright sx={{ mt: 5 }} />
         </Box>
       </Box>

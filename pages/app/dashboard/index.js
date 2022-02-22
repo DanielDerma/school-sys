@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import Fab from "@mui/material/Fab";
 import Paper from "@mui/material/Paper";
-import AddIcon from "@mui/icons-material/Add";
-import Table from "../../../components/DataTable";
 import Layout from "../../../components/AppLayout";
 import { useRouter } from "next/router";
 import { useAuth } from "../../../contexts/AuthContext";
@@ -12,7 +9,9 @@ import ChartNumbers from "../../../components/Chart/ChartNumbers";
 import ChartBarControls from "../../../components/Chart/ChartBarControls";
 import ChartRadarControls from "../../../components/Chart/ChartRadarControls";
 import ChartRadar from "../../../components/Chart/ChartRadar";
-import ChartPie from "../../../components/Chart/ChartPie";
+import { Typography } from "@mui/material";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import IconButton from "@mui/material/IconButton";
 
 const SectionRatio = ({ meanFormatted }) => {
   return (
@@ -21,12 +20,16 @@ const SectionRatio = ({ meanFormatted }) => {
         <Paper
           sx={{
             p: 2,
-            display: "flex",
-            flexDirection: "column",
-            // height: 600,
+            height: "100%",
           }}
         >
-          <ChartPie title={"Promedio de Género"} />
+          <Typography component="h2">
+            Maestra: Rocio Catalina Nevarez Gonzalez
+          </Typography>
+          <Typography component="h2">Número: 639 115 10 67</Typography>
+          <IconButton>
+            <AlternateEmailIcon />
+          </IconButton>
         </Paper>
       </Grid>
       <Grid item xs={12} md={4} lg={4}>
@@ -66,17 +69,13 @@ export default function Dasboard() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [radarParms, setRadarParms] = useState([]);
-
   useEffect(() => {
     !currentUser && router.replace("/log/login");
     if (currentUser) {
       handleData("student");
     }
+    console.count();
   }, [currentUser, router]);
-
-  useEffect(() => {
-    // console.log(radarParms);
-  }, [radarParms]);
 
   const handleData = async (type) => {
     setLoading(true);
@@ -106,7 +105,8 @@ export default function Dasboard() {
         ) / 100;
 
       return {
-        name: e.id,
+        // name: e.id,
+        name: e.first_name + " " + e.last_name,
         Promedio: prom,
       };
     });
@@ -154,6 +154,7 @@ export default function Dasboard() {
           : null,
       },
     ];
+
     return (
       <Grid container spacing={3}>
         <SectionRatio meanFormatted={meanFormatted} />

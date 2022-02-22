@@ -68,32 +68,36 @@ export default function BasicTable({
     );
   }
 
-  return (
-    <TableContainer component={Paper} width="80%">
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableBody>
-          {loading ? (
-            <SkeletonData />
-          ) : (
-            <>
-              {labels.map((e, i) => {
-                const headT = data[i];
-                return (
-                  <TableRow
-                    key={i}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row" align="center">
-                      {headT}
-                    </TableCell>
-                    <TableCell align="center">{e}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </>
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+  if (Object.keys(data).length > 0) {
+    return (
+      <TableContainer component={Paper} width="80%">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableBody>
+            {loading ? (
+              <SkeletonData />
+            ) : (
+              <>
+                {labels.map((e, i) => {
+                  const headT = Object.values(data)[i];
+                  return (
+                    <TableRow
+                      key={i}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row" align="center">
+                        {e}
+                      </TableCell>
+                      <TableCell align="center">{headT}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  }
+
+  return null;
 }

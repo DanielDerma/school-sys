@@ -1,0 +1,127 @@
+{
+  "period": {
+    "AGO-DIC/2020": {
+      "Electromecánica": {
+        "2A": ["Física", "Matemáticas", "Español"],
+        "2B": ["Física", "Matemáticas", "Español"],
+
+        "4A": ["Física", "Matemáticas", "Español"],
+        "4B": ["Física", "Matemáticas", "Español"],
+
+        "6A": ["Física", "Matemáticas", "Español"],
+        "6B": ["Física", "Matemáticas", "Español"],
+
+        "8A": ["Física", "Matemáticas", "Español"],
+        "8B": ["Física", "Matemáticas", "Español"]
+      },
+      "Gestión Empresarial": {
+        "2A": ["Física", "Matemáticas", "Español"],
+        "2B": ["Física", "Matemáticas", "Español"],
+
+        "4A": ["Física", "Matemáticas", "Español"],
+        "4B": ["Física", "Matemáticas", "Español"],
+
+        "6A": ["Física", "Matemáticas", "Español"],
+        "6B": ["Física", "Matemáticas", "Español"],
+
+        "8A": ["Física", "Matemáticas", "Español"],
+        "8B": ["Física", "Matemáticas", "Español"]
+      },
+      "Energías Renovables": {
+        "2A": ["Física", "Matemáticas", "Español"],
+        "2B": ["Física", "Matemáticas", "Español"],
+
+        "4A": ["Física", "Matemáticas", "Español"],
+        "4B": ["Física", "Matemáticas", "Español"],
+
+        "6A": ["Física", "Matemáticas", "Español"],
+        "6B": ["Física", "Matemáticas", "Español"],
+
+        "8A": ["Física", "Matemáticas", "Español"],
+        "8B": ["Física", "Matemáticas", "Español"]
+      }
+    },
+    "ENE-JUN/2021": {
+      "Electromecánica": {
+        "2A": ["Física", "Matemáticas", "Español"],
+        "2B": ["Física", "Matemáticas", "Español"],
+
+        "4A": ["Física", "Matemáticas", "Español"],
+        "4B": ["Física", "Matemáticas", "Español"],
+
+        "6A": ["Física", "Matemáticas", "Español"],
+        "6B": ["Física", "Matemáticas", "Español"],
+
+        "8A": ["Física", "Matemáticas", "Español"],
+        "8B": ["Física", "Matemáticas", "Español"]
+      },
+      "Gestión Empresarial": {
+        "2A": ["Física", "Matemáticas", "Español"],
+        "2B": ["Física", "Matemáticas", "Español"],
+
+        "4A": ["Física", "Matemáticas", "Español"],
+        "4B": ["Física", "Matemáticas", "Español"],
+
+        "6A": ["Física", "Matemáticas", "Español"],
+        "6B": ["Física", "Matemáticas", "Español"],
+
+        "8A": ["Física", "Matemáticas", "Español"],
+        "8B": ["Física", "Matemáticas", "Español"]
+      },
+      "Energías Renovables": {
+        "2A": ["Física", "Matemáticas", "Español"],
+        "2B": ["Física", "Matemáticas", "Español"],
+
+        "4A": ["Física", "Matemáticas", "Español"],
+        "4B": ["Física", "Matemáticas", "Español"],
+
+        "6A": ["Física", "Matemáticas", "Español"],
+        "6B": ["Física", "Matemáticas", "Español"],
+
+        "8A": ["Física", "Matemáticas", "Español"],
+        "8B": ["Física", "Matemáticas", "Español"]
+      }
+    },
+    "AGO-DIC/2021": {
+      "Electromecánica": {
+        "2A": ["Física", "Matemáticas", "Español"],
+        "2B": ["Física", "Matemáticas", "Español"],
+
+        "4A": ["Física", "Matemáticas", "Español"],
+        "4B": ["Física", "Matemáticas", "Español"],
+
+        "6A": ["Física", "Matemáticas", "Español"],
+        "6B": ["Física", "Matemáticas", "Español"],
+
+        "8A": ["Física", "Matemáticas", "Español"],
+        "8B": ["Física", "Matemáticas", "Español"]
+      },
+      "Gestión Empresarial": {
+        "2A": ["Física", "Matemáticas", "Español"],
+        "2B": ["Física", "Matemáticas", "Español"],
+
+        "4A": ["Física", "Matemáticas", "Español"],
+        "4B": ["Física", "Matemáticas", "Español"],
+
+        "6A": ["Física", "Matemáticas", "Español"],
+        "6B": ["Física", "Matemáticas", "Español"],
+
+        "8A": ["Física", "Matemáticas", "Español"],
+        "8B": ["Física", "Matemáticas", "Español"]
+      },
+      "Energías Renovables": {
+        "2A": ["Física", "Matemáticas", "Español"],
+        "2B": ["Física", "Matemáticas", "Español"],
+
+        "4A": ["Física", "Matemáticas", "Español"],
+        "4B": ["Física", "Matemáticas", "Español"],
+
+        "6A": ["Física", "Matemáticas", "Español"],
+        "6B": ["Física", "Matemáticas", "Español"],
+
+        "8A": ["Física", "Matemáticas", "Español"],
+        "8B": ["Física", "Matemáticas", "Español"]
+      }
+    }
+  }
+}

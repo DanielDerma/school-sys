@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -12,32 +11,12 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { mainListItems } from "./Functions";
+import { MainListItems } from "./Functions";
 import { Container, Grid } from "@mui/material";
 import Link from "@mui/material/Link";
+import Copyright from "../Copyright";
+
 const drawerWidth = 240;
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link
-        color="inherit"
-        href="https://industryconect.com.mx/"
-        target="_blank"
-      >
-        Industry Conect
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const CopyrightA = styled(Copyright)(({ theme }) => ({
-  position: "absolute",
-  bottom: theme.spacing(2),
-}));
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -150,17 +129,17 @@ export default function MiniDrawer({ children }) {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <List>{mainListItems}</List>
+          <MainListItems />
         </Drawer>
         <Box
           component="main"
           sx={{
-            flexGrow: 1,
-            p: 3,
             backgroundColor: (theme) =>
               theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
+            flexGrow: 1,
+            p: 3,
             height: "100vh",
             overflow: "auto",
           }}
@@ -169,7 +148,7 @@ export default function MiniDrawer({ children }) {
           <Container maxWidth={false} sx={{ mt: 0, mb: 4 }}>
             {children}
           </Container>
-          <Copyright sx={{ pt: 4 }} />
+          <Copyright />
         </Box>
       </Box>
     </ThemeProvider>

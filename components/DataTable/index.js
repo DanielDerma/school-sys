@@ -1,17 +1,32 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Paper, Toolbar } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  ListItem,
+  Paper,
+  TextField,
+  Toolbar,
+} from "@mui/material";
 import Table from "./Table";
 import Search from "./Search";
 import { students, infoPropsStudent } from "../../lib/DataTest";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
+import { List } from "immutable";
 
 export default function Index() {
   const { currentUser } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [q, setQ] = useState("");
 
   useEffect(() => {
     !currentUser && router.replace("/log/login");
@@ -24,13 +39,26 @@ export default function Index() {
     setLoading(true);
     try {
       const response = await fetch(`http://localhost:3000/api/${type}`);
-      const data = await response.json();
+      const result = await response.json();
       setLoading(false);
-      setData(data);
+      setData(result);
+      setFilteredre(result);
     } catch (error) {
       setLoading(false);
       console.log(error);
     }
+  };
+  const handleFilter = (filter) => {
+    const fill =
+      data &&
+      data.filter(
+        (a) =>
+          a.first_name.toLowerCase().includes(filter.toLowerCase()) ||
+          a.last_name.toLowerCase().includes(filter.toLowerCase()) ||
+          a.contact_add.toLowerCase().includes(filter.toLowerCase()) ||
+          a.email.toLowerCase().includes(filter.toLowerCase())
+      );
+    setFilteredData(fill);
   };
 
   const EnhancedTableMenu = () => {
@@ -41,10 +69,8 @@ export default function Index() {
           pr: { xs: 1, sm: 1 },
         }}
       >
-        <Search />
-        <Button variant="outlined" onClick={() => setLoading(!loading)}>
-          Agregar Elementos
-        </Button>
+        <Search changeFilter={(result) => setQ(result)} />
+        <FormDialog />
       </Toolbar>
     );
   };
@@ -83,5 +109,47 @@ export default function Index() {
         />
       </Paper>
     </Box>
+  );
+}
+
+function FormDialog() {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Agregar Elementos
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here.
+            We will send updates occasionally.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Subscribe</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }

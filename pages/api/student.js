@@ -12,7 +12,7 @@ export default function handler(req, res) {
       email: "ctrevaskiss0@fotki.com",
       pass: "WSIq6XJy6vEw",
       math: 100,
-      chinese: 100,
+      chinese: 0,
       english: 90,
       geography: 60,
       physics: 60,

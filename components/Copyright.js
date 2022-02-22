@@ -1,8 +1,13 @@
 import { Link, Typography } from "@mui/material";
 
-function Copyright() {
+export default function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      sx={{ pb: 0, mb: 0 }}
+    >
       {"Copyright © "}
       <Link
         color="inherit"
