@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Layout from "../../../components/AppLayout";
 import { useAuth } from "../../../contexts/AuthContext";
 import { Grid } from "@mui/material";
-import TableSet from "../../../components/Table";
 
+import { AppLayout, Table } from "../../../components";
 export default function SiiView() {
   const { currentUser, logout } = useAuth();
   const router = useRouter();
@@ -47,7 +46,7 @@ export default function SiiView() {
   return (
     <Grid container spacing={3} justifyContent="center">
       <Grid item xs={9}>
-        <TableSet
+        <Table
           loading={loading}
           labels={labelsAccount}
           additionalLabels={additionalLabels}
@@ -58,4 +57,4 @@ export default function SiiView() {
     </Grid>
   );
 }
-SiiView.Layout = Layout;
+SiiView.Layout = AppLayout;

@@ -20,20 +20,30 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
 import { List } from "immutable";
 
-export default function Index() {
+export default function DataTable() {
   const { currentUser } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [q, setQ] = useState("");
+  console.count("DataTable");
+  console.log(data);
+  // console.log(data)
 
   useEffect(() => {
     !currentUser && router.replace("/log/login");
     if (currentUser) {
       handleData("admin");
     }
-  }, [currentUser, router]);
+  }, [currentUser]);
+
+  // useEffect(() => {
+  //   console.log(q);
+  // }, [q]);
+
+  const handleQ = (type) => {
+    console.log(type);
+  };
 
   const handleData = async (type) => {
     setLoading(true);
@@ -42,23 +52,10 @@ export default function Index() {
       const result = await response.json();
       setLoading(false);
       setData(result);
-      setFilteredre(result);
     } catch (error) {
       setLoading(false);
       console.log(error);
     }
-  };
-  const handleFilter = (filter) => {
-    const fill =
-      data &&
-      data.filter(
-        (a) =>
-          a.first_name.toLowerCase().includes(filter.toLowerCase()) ||
-          a.last_name.toLowerCase().includes(filter.toLowerCase()) ||
-          a.contact_add.toLowerCase().includes(filter.toLowerCase()) ||
-          a.email.toLowerCase().includes(filter.toLowerCase())
-      );
-    setFilteredData(fill);
   };
 
   const EnhancedTableMenu = () => {

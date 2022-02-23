@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import Layout from "../../../components/AppLayout";
-import FeaturedPost from "../../../components/FeaturedPost";
-import { DEditor } from "../../../components/Dialog";
-import { Grid, Pagination } from "@mui/material";
-import { featuredPosts } from "../../../lib/Posts/data";
-import { useAuth } from "../../../contexts/AuthContext";
 import { useRouter } from "next/router";
+import { useAuth } from "../../../contexts/AuthContext";
+import { featuredPosts } from "../../../lib/Posts/data"; //fake
+import { Grid, Pagination } from "@mui/material";
+
+import { AppLayout, FeaturedPost, DEditor } from "../../../components";
 
 const Media = () => {
   // loading prop FeaturedPost
@@ -38,4 +37,4 @@ export default function Editor() {
   );
 }
 // changeInfo={(info) => setInfo(info)}
-Editor.Layout = Layout;
+Editor.Layout = AppLayout;

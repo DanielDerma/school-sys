@@ -1,5 +1,9 @@
 import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
@@ -7,10 +11,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import SchoolIcon from "@mui/icons-material/School";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
-import Link from "next/link";
-import List from "@mui/material/List";
-import { grey } from "@mui/material/colors";
-import { useRouter } from "next/router";
+
 export const MainListItems = () => {
   const router = useRouter();
   // get the last word of the pathname

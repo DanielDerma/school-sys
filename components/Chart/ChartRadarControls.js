@@ -1,12 +1,14 @@
-import * as React from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import CommentIcon from "@mui/icons-material/Comment";
+import { useState, useEffect } from "react";
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Checkbox,
+  IconButton,
+} from "@mui/material";
+
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 import { Box } from "@mui/material";
@@ -26,7 +28,7 @@ export default function GroupedSelect({ data, changeRadarParms }) {
 }
 
 function CheckboxList({ data, changeRadarParms }) {
-  const [checked, setChecked] = React.useState([]);
+  const [checked, setChecked] = useState([]);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -41,7 +43,7 @@ function CheckboxList({ data, changeRadarParms }) {
     setChecked(newChecked);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (checked.length > 2) {
       setChecked([]);
     }

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import Layout from "../../../components/AppLayout";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useRouter } from "next/router";
-import DataTable from "../../../components/DataTable";
+
+import { AppLayout, DataTable } from "../../../components";
 
 export default function SiiMain() {
   const { currentUser } = useAuth();
@@ -16,4 +16,4 @@ export default function SiiMain() {
     </>
   );
 }
-SiiMain.Layout = Layout;
+SiiMain.Layout = AppLayout;

@@ -1,11 +1,9 @@
 import { useEffect } from "react";
-import Layout from "../../../components/AppLayout";
 import Head from "next/head";
-
-import { useAuth } from "../../../contexts/AuthContext";
-import { useRouter } from "next/router";
-import DataTable from "../../../components/DataTable";
 import { Grid, Typography } from "@mui/material";
+import { useRouter } from "next/router";
+import { useAuth } from "../../../contexts/AuthContext";
+import { DataTable, AppLayout } from "../../../components";
 
 const tabsAdmin = [
   {
@@ -43,4 +41,4 @@ export default function Admin() {
   );
 }
 
-Admin.Layout = Layout;
+Admin.Layout = AppLayout;

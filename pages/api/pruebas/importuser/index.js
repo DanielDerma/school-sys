@@ -5,17 +5,17 @@ import { student } from "./data";
 export default async function handler(req, res) {
   const addStudent = await Promise.all(
     student.map(async (stud) => {
-      const studentadd = await firestore
-        .collection("user")
-        .doc(stud.email)
-        .set({
-          age: stud.age,
-          contact_add: stud.contact_add,
-          email: stud.email,
-          fname: stud.first_name,
-          lname: stud.last_name,
-          role: stud.role,
-        });
+      // const studentadd = await firestore
+      //   .collection("user")
+      //   .doc(stud.email)
+      //   .set({
+      //     age: stud.age,
+      //     contact_add: stud.contact_add,
+      //     email: stud.email,
+      //     fname: stud.first_name,
+      //     lname: stud.last_name,
+      //     role: stud.role,
+      //   });
 
       const addStudent = await Promise.all(
         stud.course.map(async (cour) => {

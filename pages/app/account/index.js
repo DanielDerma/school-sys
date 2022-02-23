@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Layout from "../../../components/AppLayout";
-import { Avatar, Button } from "@mui/material";
+import { Grid, Paper, Avatar, Button } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
-import { useAuth } from "../../../contexts/AuthContext";
-import TableSet from "../../../components/Table";
 import { useRouter } from "next/router";
+import { useAuth } from "../../../contexts/AuthContext";
+
+import { Table, AppLayout } from "../../../components";
 
 const Account = () => {
   const { currentUser, logout } = useAuth();
@@ -41,6 +39,7 @@ const Account = () => {
   useEffect(() => {
     !currentUser && router.replace("/log/login");
     if (currentUser) {
+      console.log(currentUser.uid);
       fetchRows();
     }
   }, [currentUser, router]);
@@ -70,16 +69,16 @@ const Account = () => {
               bgcolor: deepOrange[500],
               width: 208,
               height: 208,
-              fontSize: 160,
+              fontSize: 80,
             }}
           >
-            N
+            DD
           </Avatar>
         </Paper>
       </Grid>
       {/* Chart */}
       <Grid item xs={12} md={8} lg={9}>
-        <TableSet loading={loading} data={data} labels={labelsAccount} />
+        <Table loading={loading} data={data} labels={labelsAccount} />
       </Grid>
       <Button
         color="secondary"
@@ -101,6 +100,6 @@ const Account = () => {
   );
 };
 
-Account.Layout = Layout;
+Account.Layout = AppLayout;
 
 export default Account;

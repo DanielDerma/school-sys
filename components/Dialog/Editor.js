@@ -1,15 +1,19 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
-import Slide from "@mui/material/Slide";
-import Fab from "@mui/material/Fab";
+import { useState, useEffect, forwardRef } from "react";
+import {
+  Grid,
+  TextField,
+  Button,
+  Dialog,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Slide,
+  Fab,
+} from "@mui/material";
+
 import AddIcon from "@mui/icons-material/Add";
-import { Grid, TextField } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 import RichEditor from "../RichEditor/index";
 import Dropzone from "../Dropzone";
@@ -17,17 +21,17 @@ import { firestore, storage } from "../../firebase/client";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function EditorRN() {
-  const [open, setOpen] = React.useState(false);
-  const [save, setSave] = React.useState(false);
-  const [newPost, setNewPost] = React.useState({});
-  const [uriImg, setUriImg] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [save, setSave] = useState(false);
+  const [newPost, setNewPost] = useState({});
+  const [uriImg, setUriImg] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       save &&
       Object.keys(newPost.rawContent).length > 0 &&

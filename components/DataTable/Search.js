@@ -1,12 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import MenuIcon from "@mui/icons-material/Menu";
+
+import { Box, InputBase, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("div")(({ theme }) => ({
@@ -49,23 +44,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar({ changeFilter }) {
-  const [searchValue, setSearchValue] = useState("");
-  const handleChange = (event) => {
-    changeFilter(event.target.value);
-  };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Search sx={{ border: "1px solid grey" }}>
+      {/* <Search sx={{ border: "1px solid grey" }}>
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
-          inputProps={{ "aria-label": "search" }}
-          onChange={handleChange}
+          // inputProps={{ "aria-label": "search" }}
+          onChange={(e) => changeFilter(e.target.value)}
         />
-      </Search>
+      </Search> */}
+      <TextField
+        id="outlined-basic"
+        label="Outlined"
+        variant="outlined"
+        onChange={(e) => changeFilter(e.target.value)}
+      />
     </Box>
   );
 }
