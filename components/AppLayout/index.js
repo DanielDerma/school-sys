@@ -1,10 +1,12 @@
 import { useState } from "react";
+
 import { styled, useTheme, ThemeProvider } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { MainListItems } from "./Functions";
 import Copyright from "../Copyright";
+import { useAuth } from "../../contexts/AuthContext";
 
 import {
   Container,
@@ -87,6 +89,8 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer({ children }) {
+  const { currentUser } = useAuth();
+
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 

@@ -3,7 +3,7 @@ import { Grid, Paper, Avatar, Button } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import { useRouter } from "next/router";
 import { useAuth } from "../../../contexts/AuthContext";
-
+import { getInfoAccount } from "../../../utils/firebaseStorage";
 import { Table, AppLayout } from "../../../components";
 
 const Account = () => {
@@ -12,35 +12,21 @@ const Account = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const labelsAccount = [
-    "ID",
-    "Primer Nombre",
-    "Apellidos",
-    "Genero",
-    "Edad",
-    "Número",
-    "Correo",
-    "Contraseña",
-  ];
-
-  const fetchRows = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("http://localhost:3000/api/only-student");
-      const data = await response.json();
-      setLoading(false);
-      setData(data);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
-  };
+  const labelsAccount = ["Nombre", "Apellido", "Edad", "Número", "Correo"];
 
   useEffect(() => {
     !currentUser && router.replace("/log/login");
     if (currentUser) {
-      console.log(currentUser.uid);
-      fetchRows();
+      setLoading(true);
+      getInfoAccount(currentUser.uid)
+        .then((info) => {
+          setLoading(false);
+          setData(info);
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+        });
     }
   }, [currentUser, router]);
 
@@ -51,6 +37,7 @@ const Account = () => {
   function goHome() {
     router.push("/home");
   }
+  console.log(data);
   return (
     <Grid container spacing={3} justifyContent="center">
       {/* Recent Deposits */}

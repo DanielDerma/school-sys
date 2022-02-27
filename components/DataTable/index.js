@@ -1,63 +1,13 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  ListItem,
-  Paper,
-  TextField,
-  Toolbar,
-} from "@mui/material";
+import { Box, Button, Paper, Toolbar } from "@mui/material";
+
 import Table from "./Table";
 import Search from "./Search";
-import { students, infoPropsStudent } from "../../lib/DataTest";
+import { infoPropsStudent } from "../../lib/DataTest";
+import { DTable } from "../../components";
 
-import { useAuth } from "../../contexts/AuthContext";
-import { useRouter } from "next/router";
-import { List } from "immutable";
-
-export default function DataTable() {
-  const { currentUser } = useAuth();
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [q, setQ] = useState("");
-  console.count("DataTable");
-  console.log(data);
-  // console.log(data)
-
-  useEffect(() => {
-    !currentUser && router.replace("/log/login");
-    if (currentUser) {
-      handleData("admin");
-    }
-  }, [currentUser]);
-
-  // useEffect(() => {
-  //   console.log(q);
-  // }, [q]);
-
-  const handleQ = (type) => {
-    console.log(type);
-  };
-
-  const handleData = async (type) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`http://localhost:3000/api/${type}`);
-      const result = await response.json();
-      setLoading(false);
-      setData(result);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
-  };
-
+export default function DataTable({ tabsAdmin, data, loading, change }) {
+  const [focus, setFocus] = useState("");
   const EnhancedTableMenu = () => {
     return (
       <Toolbar
@@ -66,10 +16,17 @@ export default function DataTable() {
           pr: { xs: 1, sm: 1 },
         }}
       >
-        <Search changeFilter={(result) => setQ(result)} />
+        <Search />
         <FormDialog />
       </Toolbar>
     );
+  };
+
+  const handleClickTabs = (e) => {
+    if (focus !== e) {
+      setFocus(e);
+      change(e);
+    }
   };
 
   const EnhancedTableTabs = () => {
@@ -80,15 +37,15 @@ export default function DataTable() {
           pr: { xs: 1, sm: 1 },
         }}
       >
-        <Button variant="outlined" onClick={() => handleData("admin")}>
-          admin
-        </Button>
-        <Button variant="outlined" onClick={() => handleData("instructor")}>
-          profes
-        </Button>
-        <Button variant="outlined" onClick={() => handleData("student")}>
-          alum
-        </Button>
+        {tabsAdmin.map((tab) => (
+          <Button
+            variant="outlined"
+            onClick={() => handleClickTabs(tab.hash)}
+            key={tab.hash}
+          >
+            {tab.title}
+          </Button>
+        ))}
       </Toolbar>
     );
   };
@@ -99,10 +56,10 @@ export default function DataTable() {
         <EnhancedTableTabs />
         <EnhancedTableMenu />
         <Table
-          data={data}
           infoProps={infoPropsStudent}
           isSiiMain={false}
           loading={loading}
+          data={data}
         />
       </Paper>
     </Box>
@@ -125,28 +82,11 @@ function FormDialog() {
       <Button variant="outlined" onClick={handleClickOpen}>
         Agregar Elementos
       </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
-        </DialogActions>
-      </Dialog>
+      <DTable
+        open={open}
+        handleClose={handleClose}
+        handleClickOpen={handleClickOpen}
+      />
     </div>
   );
 }

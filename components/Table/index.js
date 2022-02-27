@@ -87,7 +87,17 @@ export default function BasicTable({
                       <TableCell component="th" scope="row" align="center">
                         {e}
                       </TableCell>
-                      <TableCell align="center">{headT}</TableCell>
+                      <TableCell align="center">
+                        {
+                          {
+                            Nombre: data.fname,
+                            Apellido: data.lname,
+                            Edad: data.age,
+                            Número: data.contact_add,
+                            Correo: data.email,
+                          }[e]
+                        }
+                      </TableCell>
                     </TableRow>
                   );
                 })}

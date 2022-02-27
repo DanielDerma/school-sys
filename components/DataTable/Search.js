@@ -38,30 +38,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "12ch",
+      width: "100%",
     },
   },
 }));
 
-export default function SearchAppBar({ changeFilter }) {
+export default function SearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* <Search sx={{ border: "1px solid grey" }}>
+      <Search sx={{ border: "1px solid grey" }}>
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
-          // inputProps={{ "aria-label": "search" }}
-          onChange={(e) => changeFilter(e.target.value)}
+          inputProps={{ "aria-label": "search" }}
+          // onChange={(e) => changeFilter(e.target.value)}
         />
-      </Search> */}
-      <TextField
-        id="outlined-basic"
-        label="Outlined"
-        variant="outlined"
-        onChange={(e) => changeFilter(e.target.value)}
-      />
+      </Search>
     </Box>
   );
 }

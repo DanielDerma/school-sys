@@ -22,6 +22,8 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 
+import { DTable } from "../../components";
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -189,9 +191,22 @@ const DataLoader = ({ isSiiMain }) => {
 export default function EnhancedTable({ data, infoProps, isSiiMain, loading }) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("id");
+  const [previewDataChange, setPreviewDataChange] = useState({});
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
+
+  console.log(selected);
+
+  const handleClickOpen = (id) => {
+    setPreviewDataChange(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -289,24 +304,17 @@ export default function EnhancedTable({ data, infoProps, isSiiMain, loading }) {
                         }}
                       />
                     </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {row.id}
+                    <TableCell component="th" id={labelId} scope="row">
+                      {row.fname}
                     </TableCell>
-                    <TableCell>{row.first_name}</TableCell>
-                    <TableCell>{row.last_name}</TableCell>
-                    <TableCell>{row.gender}</TableCell>
+                    <TableCell>{row.lname}</TableCell>
                     <TableCell>{row.age}</TableCell>
                     <TableCell>{row.contact_add}</TableCell>
                     <TableCell>{row.email}</TableCell>
-                    <TableCell type="password">{row.pass}</TableCell>
+                    <TableCell>{row.role}</TableCell>
                     {!isSiiMain ? (
                       <TableCell align="center">
-                        <Button>
+                        <Button onClick={() => handleClickOpen(row)}>
                           <EditOutlinedIcon fontSize="small" />
                         </Button>
                         <Button color="secondary">
@@ -351,6 +359,13 @@ export default function EnhancedTable({ data, infoProps, isSiiMain, loading }) {
           </TableRow>
         </TableFooter>
       </Table>
+      <DTable
+        open={open}
+        handleClose={handleClose}
+        handleClickOpen={handleClickOpen}
+        select={selected}
+        preview={previewDataChange}
+      />
     </TableContainer>
   );
 }

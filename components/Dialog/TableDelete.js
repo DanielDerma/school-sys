@@ -9,22 +9,11 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-export default function Table() {
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+export default function TableDelete({ open, handleClose, handleClickOpen }) {
+  // liffter up
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Subscribe</DialogTitle>
         <DialogContent>

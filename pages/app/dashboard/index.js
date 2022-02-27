@@ -28,7 +28,7 @@ const SectionRatio = ({ meanFormatted }) => {
 };
 
 export default function Dasboard() {
-  const { currentUser, logout } = useAuth();
+  const { currentUser } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);

@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import { useAuth } from "../../../contexts/AuthContext";
 import { DataTable, AppLayout } from "../../../components";
+import { getCollectionUser } from "../../../utils/firebaseStorage";
 
 const tabsAdmin = [
   {
@@ -21,13 +22,32 @@ const tabsAdmin = [
 ];
 
 export default function Admin() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const { currentUser } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     !currentUser && router.replace("/log/login");
-  }, [currentUser, router]);
+    if (currentUser) {
+      handleData("student");
+    }
+  }, [currentUser]);
 
+  const handleData = async (type) => {
+    console.log("type", type);
+    setLoading(true);
+    try {
+      const response = await getCollectionUser(type);
+      setLoading(false);
+      setData(response);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+  console.log(data);
   return (
     <Grid container spacing={3}>
       <Head>
@@ -35,7 +55,12 @@ export default function Admin() {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Grid item xs={12}>
-        <DataTable />
+        <DataTable
+          tabsAdmin={tabsAdmin}
+          data={data}
+          loading={loading}
+          change={(e) => handleData(e)}
+        />
       </Grid>
     </Grid>
   );

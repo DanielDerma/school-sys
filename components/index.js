@@ -14,7 +14,7 @@ export { default as DataTable } from "./DataTable";
 
 //Dialog
 export { default as DEditor } from "./Dialog/Editor";
-export { default as DTable } from "./Dialog/Table";
+export { default as DTable } from "./Dialog/TableAdd";
 //LogLayout
 export { default as LogLayout } from "./LogLayout";
 //Normal Layout
