@@ -21,6 +21,7 @@ import { visuallyHidden } from "@mui/utils";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
+import PasswordIcon from "@mui/icons-material/Password";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -304,13 +305,20 @@ export default function EnhancedTable({
                     <TableCell>{row.age}</TableCell>
                     <TableCell>{row.contact_add}</TableCell>
                     <TableCell>{row.email}</TableCell>
+                    <TableCell>•••••••</TableCell>
                     {!isSiiMain ? (
                       <TableCell align="center">
                         <Button onClick={() => handleClickOpenEditor(row)}>
                           <EditOutlinedIcon fontSize="small" />
                         </Button>
                         <Button
+                          onClick={() => handleClickOpenDelete(row)}
                           color="secondary"
+                        >
+                          <PasswordIcon fontSize="small" />
+                        </Button>
+                        <Button
+                          color="warning"
                           onClick={() => handleClickOpenDelete(row)}
                         >
                           <CloseOutlinedIcon fontSize="small" />
