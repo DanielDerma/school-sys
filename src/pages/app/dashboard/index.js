@@ -49,7 +49,7 @@ export default function Dashboard() {
       console.error(error);
     }
   };
-  if (!loading && Object.keys(data).length > 0) {
+  if (!(!loading && Object.keys(data).length > 0)) {
     return null;
   }
   const chart = dataFormatted(data, radarParams);

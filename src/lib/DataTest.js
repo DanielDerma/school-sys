@@ -287,8 +287,24 @@ export const courses = [
 ];
 
 export const infoPropsStudent = {
-  headId: ["fname", "lname", "age", "contact_add", "stud_email", "actions"],
-  headLabels: ["Nombre", "Apellidos", "Edad", "Telefono", "Email", "Acciones"],
+  headId: [
+    "fname",
+    "lname",
+    "age",
+    "contact_add",
+    "stud_email",
+    "initialPassword",
+    "actions",
+  ],
+  headLabels: [
+    "Nombre",
+    "Apellidos",
+    "Edad",
+    "Telefono",
+    "Email",
+    "initialPassword",
+    "Acciones",
+  ],
 };
 
 export const infoPropsInstructor = {
