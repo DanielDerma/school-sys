@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import FormHelperText from "@mui/material/FormHelperText";
 
 const baseStyle = {
   flex: 1,
@@ -29,9 +30,7 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-export default function StyledDropzone(props) {
-  const { getImg } = props;
-  const [files, setFiles] = useState([]);
+export default function StyledDropzone({ error, getImage, editPost }) {
   const {
     getRootProps,
     getInputProps,
@@ -43,16 +42,8 @@ export default function StyledDropzone(props) {
     accept: "image/*",
     maxFiles: 1,
     onDrop: (acceptedFiles) => {
-      getImg(acceptedFiles);
+      getImage(acceptedFiles);
     },
-  });
-
-  const filesShow = acceptedFiles.map((file) => {
-    return (
-      <li key={file.path}>
-        {file.path} - {file.size} bytes
-      </li>
-    );
   });
 
   const style = useMemo(
@@ -60,9 +51,9 @@ export default function StyledDropzone(props) {
       ...baseStyle,
       ...(isFocused ? focusedStyle : {}),
       ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {}),
+      ...(isDragReject || error ? rejectStyle : {}),
     }),
-    [isFocused, isDragAccept, isDragReject]
+    [isFocused, isDragAccept, isDragReject, error]
   );
 
   return (
@@ -70,13 +61,16 @@ export default function StyledDropzone(props) {
       <div className="container">
         <div {...getRootProps({ style })}>
           <input {...getInputProps()} />
-          <p>Suelta la imagen del post</p>
+          {!error ? (
+            <p>Soltar imagen</p>
+          ) : (
+            <p style={{ color: "#d32f2f" }}>La imagen es requerida</p>
+          )}
         </div>
+        {error ? (
+          <p style={{ color: "#d32f2f" }}>Contenido es necesario</p>
+        ) : null}
       </div>
-      <aside>
-        <h4>Archivos subidos</h4>
-        <ul>{filesShow}</ul>
-      </aside>
     </>
   );
 }

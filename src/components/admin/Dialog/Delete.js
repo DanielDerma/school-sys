@@ -8,7 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { deleteUser } from "../../utils/firebaseStorage";
+import { deleteUser } from "../../../utils/firebaseStorage";
 
 export default function TableDelete({
   open,

@@ -4,7 +4,7 @@ import { styled, useTheme, ThemeProvider } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { MainListItems } from "./Functions";
+import MainListItems from "./MainListItems";
 import Copyright from "../Copyright";
 
 import {
@@ -88,7 +88,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer({ children }) {
-
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -145,15 +144,25 @@ export default function MiniDrawer({ children }) {
                 : theme.palette.grey[900],
             flexGrow: 1,
             p: 3,
-            height: "100vh",
-            overflow: "auto",
+            minHeight: "100vh",
+            position: "relative",
           }}
         >
           <DrawerHeader />
           <Container maxWidth={false} sx={{ mt: 0, mb: 4 }}>
             {children}
           </Container>
-          <Copyright />
+          <Copyright
+            sx={{
+              display: "flex",
+              width: "32ch",
+              position: "absolute",
+              bottom: 12,
+              left: 0,
+              right: 0,
+              mx: "auto",
+            }}
+          />
         </Box>
       </Box>
     </ThemeProvider>

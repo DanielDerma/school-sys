@@ -6,6 +6,7 @@ export const student = [
     age: 19,
     contact_add: "639-115-10-67",
     email: "pr00005@prepa7.com",
+    initialPassword: "12345678",
     role: "student",
     course: [
       {

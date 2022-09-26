@@ -36,3 +36,6 @@ yarn-error.log*
 
 /old
 serviceAccountKey.json
+
+# herramientas de desarrollo (quitar en deploy)
+# /tasks

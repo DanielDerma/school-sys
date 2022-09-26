@@ -21,6 +21,7 @@ export default function GroupedSelect({ data, changeRadarParams, loading }) {
         mt: 2,
         height: "500px",
         overflow: "auto",
+        width: "100%",
       }}
     >
       <CheckboxList
@@ -66,7 +67,7 @@ function CheckboxList({ data, changeRadarParams, loading }) {
   }
 
   return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+    <List sx={{ width: "100%", bgcolor: "background.paper" }}>
       {data.map((value) => {
         const labelId = `checkbox-list-label-${value.id}`;
         return (
@@ -87,11 +88,7 @@ function CheckboxList({ data, changeRadarParams, loading }) {
             }
             disablePadding
           >
-            <ListItemButton
-              role={undefined}
-              onClick={handleToggle(value.id)}
-              dense
-            >
+            <ListItemButton role={undefined} onClick={handleToggle(value.id)}>
               <ListItemIcon>
                 <Checkbox
                   edge="start"

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { EditorState, convertToRaw } from "draft-js";
+import { useState } from "react";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
 import dynamic from "next/dynamic";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -7,16 +7,31 @@ const Editor = dynamic(
 );
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-export default function RichEditor({ addSave, getRawContent }) {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+import draftToHtml from "draftjs-to-html";
+let htmlToDraft = null;
+if (typeof window === "object") {
+  htmlToDraft = require("html-to-draftjs").default;
+}
+
+export default function RichEditor({ value, setFieldValue }) {
+  const prepareDraft = (value) => {
+    const draft = htmlToDraft(value);
+    const contentState = ContentState.createFromBlockArray(draft.contentBlocks);
+    const editorState = EditorState.createWithContent(contentState);
+    return editorState;
+  };
+
+  const [editorState, setEditorState] = useState(
+    value ? prepareDraft(value) : EditorState.createEmpty()
+  );
+
   const onEditorStateChange = (editorState) => {
+    const forFormik = draftToHtml(
+      convertToRaw(editorState.getCurrentContent())
+    );
+    setFieldValue(forFormik);
     setEditorState(editorState);
   };
-  useEffect(() => {
-    if (addSave) {
-      getRawContent(convertToRaw(editorState.getCurrentContent()));
-    }
-  }, [addSave]);
 
   return (
     <div className="editor">

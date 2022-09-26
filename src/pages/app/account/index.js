@@ -13,15 +13,15 @@ const Account = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const { currentUser, pageLoading } = useAuthPage("Account");
+
   const labelsAccount = ["Nombre", "Apellido", "Edad", "Número", "Correo"];
 
-  const user = useAuthPage();
-
   useEffect(() => {
-    if (user) {
-      getInfoUser(user.email);
+    if (currentUser) {
+      getInfoUser(currentUser.email);
     }
-  }, [user]);
+  }, [currentUser]);
 
   const getInfoUser = (email) => {
     setLoading(true);
@@ -40,7 +40,11 @@ const Account = () => {
     router.push("/home");
   }
 
-  if (data.length === 0) {
+  if (data?.length === 0) {
+    return null;
+  }
+
+  if (pageLoading) {
     return null;
   }
 
@@ -64,8 +68,8 @@ const Account = () => {
               fontSize: 80,
             }}
           >
-            {data?.fname[0]}
-            {data?.lname[0]}
+            {data?.fname[0].toUpperCase()}
+            {data?.lname[0].toUpperCase()}
           </Avatar>
         </Paper>
       </Grid>

@@ -3,8 +3,6 @@ export const dataFormatted = (data, radarParams) => {
   const polarListC = ["U1", "U2", "U3", "U4", "U5", "U6"];
 
   const filterDataBar = data.map((e, i) => {
-    // sum all object and mean
-
     const prom =
       (e.ranks.u1 +
         e.ranks.u2 +
@@ -13,9 +11,18 @@ export const dataFormatted = (data, radarParams) => {
         e.ranks.u5 +
         e.ranks.u6) /
       6;
-    return {
+
+    const promC = {
       name: e.email,
       Promedio: prom,
+    };
+    return promC;
+  });
+
+  const filterDataBarC = filterDataBar.map((elem) => {
+    return {
+      name: elem.name,
+      Promedio: elem.Promedio.toFixed(2),
     };
   });
 
@@ -30,10 +37,10 @@ export const dataFormatted = (data, radarParams) => {
   // sort the list object by name
 
   const mean = Object.keys(filterDataBar).reduce(function(previous, key) {
-    return previous + filterDataBar[key].Promedio;
+    const value = (previous + filterDataBar[key].Promedio).toFixed(2);
+    console.log({ value });
+    return value;
   }, 0);
-
-  console.log("entre a: mean", mean);
 
   const listPolarUser = radarParams.map((a) => {
     const result = data.filter((d) => {
@@ -62,6 +69,7 @@ export const dataFormatted = (data, radarParams) => {
 
   return {
     filterDataBar,
+    filterDataBarC,
     mean,
     list,
     polarUser,

@@ -2,20 +2,17 @@
 export { default as AppLayout } from "./AppLayout";
 
 //Chart (Dashboard)
-export { default as ChartBar } from "./Chart/ChartBar";
-export { default as ChartBarControls } from "./Chart/ChartBarControls";
-export { default as ChartNumbers } from "./Chart/ChartNumbers";
-export { default as ChartRadar } from "./Chart/ChartRadar";
-export { default as ChartRadarControls } from "./Chart/ChartRadarControls";
-export { default as CharN } from "./Chart/CharN";
+export { default as ChartBar } from "./dashboard/Chart/ChartBar";
+export { default as ChartBarControls } from "./dashboard/Chart/ChartBarControls";
+export { default as ChartNumbers } from "./dashboard/Chart/ChartNumbers";
+export { default as ChartRadar } from "./dashboard/Chart/ChartRadar";
+export { default as ChartRadarControls } from "./dashboard/Chart/ChartRadarControls";
+export { default as CharN } from "./dashboard/Chart/CharN";
+export { default as GridController } from "./dashboard/GridController";
 
 //DataTable (Admin, SIIMAIN)
 export { default as DataTable } from "./DataTable";
-
-//Dialog
-export { default as DEditor } from "./Dialog/Editor";
-export { default as DTable } from "./Dialog/TableAdd";
-export { default as DETable } from "./Dialog/TableDelete";
+export { default as FilterSIIMain } from "./DataTable/FilterSIIMain";
 
 //LogLayout
 export { default as LogLayout } from "./LogLayout";

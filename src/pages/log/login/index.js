@@ -13,28 +13,14 @@ import Layout from "../../../components/LogLayout";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useRouter } from "next/router";
 import { Alert } from "@mui/material";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
+import Copyright from "../../../components/Copyright";
 const theme = createTheme();
 
 export default function Login() {
   const [error, setError] = useState(null);
   const { login } = useAuth();
   const router = useRouter();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -123,7 +109,7 @@ export default function Login() {
             contraseña.
           </Alert>
 
-          <Copyright sx={{ mt: 5 }} />
+          <Copyright align="center" sx={{ mt: 5 }} />
         </Box>
       </Box>
     </Grid>

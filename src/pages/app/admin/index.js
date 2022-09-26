@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import { Grid } from "@mui/material";
-import { DataTable, AppLayout } from "../../../components";
+import { AppLayout } from "../../../components";
 import { getCollectionUser } from "../../../utils/firebaseStorage";
 import useAuthPage from "../../../hooks/useAuthPage";
+import TableSkeleton from "../../../components/DataTable/TableSkeleton";
+import DataTable from "../../../components/admin";
 
 const tabsAdmin = [
   {
@@ -44,30 +45,31 @@ export default function Admin() {
     }
   };
 
-  const user = useAuthPage();
+  const { currentUser, pageLoading } = useAuthPage("Admin");
 
   useEffect(() => {
-    if (user) {
+    if (currentUser) {
       handleData("student");
     }
-  }, [user]);
+  }, [currentUser]);
+
+  if (pageLoading) {
+    return null;
+  }
 
   return (
-    <Grid container spacing={3}>
+    <>
       <Head>
         <title>Admin</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <Grid item xs={12}>
-        <DataTable
-          admin
-          tabsAdmin={tabsAdmin}
-          data={data}
-          loading={loading}
-          change={(e) => handleData(e)}
-        />
-      </Grid>
-    </Grid>
+      <DataTable
+        tabsAdmin={tabsAdmin}
+        data={data}
+        loading={loading}
+        change={(e) => handleData(e)}
+      />
+    </>
   );
 }
 

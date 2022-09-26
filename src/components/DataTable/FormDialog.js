@@ -1,23 +1,18 @@
 import { Button, Toolbar } from "@mui/material";
+import { FilterSIIMain } from "../";
 
 export default function FormDialog({ handleClickOpenEditor }) {
   return (
     <Toolbar
       sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
         display: "flex",
-        flexDirection: "row-reverse",
+        justifyContent: "space-between",
         bc: "white",
       }}
     >
-      <div>
-        <Button variant="outlined" onClick={() => handleClickOpenEditor(false)}>
-          {" "}
-          {/* //avoid SyntheticBaseEvent  */}
-          Agregar Elementos
-        </Button>
-      </div>
+      <Button variant="outlined" onClick={() => handleClickOpenEditor(false)}>
+        Agregar Elementos
+      </Button>
     </Toolbar>
   );
 }

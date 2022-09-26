@@ -7,12 +7,15 @@ import {
   CardMedia,
 } from "@mui/material";
 
-function FeaturedPost(props) {
-  const { post } = props;
+function FeaturedPost({ post, editPost }) {
+  console.log({ post });
+  const handleCardArea = () => {
+    editPost(post);
+  };
 
   return (
     <Grid item xs={12} md={6}>
-      <CardActionArea component="a" href="#">
+      <CardActionArea component="button" onClick={handleCardArea}>
         <Card sx={{ display: "flex" }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">
@@ -22,10 +25,7 @@ function FeaturedPost(props) {
               {post.date}
             </Typography>
             <Typography variant="subtitle1" paragraph>
-              {post.description}
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
+              {post.rawContent}
             </Typography>
           </CardContent>
           <CardMedia
@@ -36,7 +36,7 @@ function FeaturedPost(props) {
               display: { xs: "none", sm: "block" },
             }}
             image={post.img}
-            alt={post.path}
+            alt={post.title}
           />
         </Card>
       </CardActionArea>

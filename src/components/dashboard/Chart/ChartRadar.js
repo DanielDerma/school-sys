@@ -10,6 +10,7 @@ import {
 } from "recharts";
 
 export default function Chart({ data }) {
+  console.log({ data });
   return (
     <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
       <Box

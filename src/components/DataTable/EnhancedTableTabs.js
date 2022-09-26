@@ -5,7 +5,6 @@ const EnhancedTableTabs = ({ query, tabsAdmin, changeQuery, change }) => {
     changeQuery(newValue);
     change(newValue);
   };
-
   return (
     <Toolbar
       sx={{

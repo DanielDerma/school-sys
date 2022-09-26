@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   Box,
+  Button,
   FormControl,
   Grid,
   InputLabel,
@@ -10,13 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const ChartBarControls = ({ fetchDashboard }) => {
-  // const [time, setTime] = useState("AGO-DIC-2021");
-  // const [ing, setIng] = useState("electromechanical");
-  // const [subject, setSubject] = useState("physical");
-  // const [grade, setGrade] = useState("1");
-  // const [group, setGroup] = useState("A");
-
+const ChartBarControls = ({ handleData }) => {
   const [time, setTime] = useState("");
   const [ing, setIng] = useState("");
   const [subject, setSubject] = useState("");
@@ -26,7 +21,7 @@ const ChartBarControls = ({ fetchDashboard }) => {
   useEffect(() => {
     if (time && ing && subject && grade && group) {
       const timeslap = `${time}_${ing}_${subject}_${grade}_${group}`;
-      fetchDashboard(timeslap);
+      handleData(timeslap);
     }
   }, [time, ing, subject, grade, group]);
 
@@ -56,23 +51,19 @@ const ChartBarControls = ({ fetchDashboard }) => {
         p: 2,
         display: "flex",
         flexDirection: "column",
-        // height: 600,
       }}
     >
-      <Box className="">
-        <Typography>Control de grafica</Typography>
+      <Box>
+        <Typography>Control de gráficas</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6} lg={6}>
             <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
-              <InputLabel id="demo-simple-select-standard-label">
-                Periodo *
-              </InputLabel>
+              <InputLabel id="select-time-label">Periodo *</InputLabel>
               <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
+                labelId="select-time-label"
+                id="select-time-select"
                 value={time}
                 onChange={handleTime}
-                // label="Seleccion de periodo"
               >
                 <MenuItem value={""}>Ninguno</MenuItem>
                 <MenuItem value={"AGO-DIC-2021"}>AGO-DIC/2021</MenuItem>{" "}
@@ -86,16 +77,12 @@ const ChartBarControls = ({ fetchDashboard }) => {
           </Grid>
           <Grid item xs={6} md={6} lg={6}>
             <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
-              <InputLabel id="demo-simple-select-standard-label">
-                Ingeniería *
-              </InputLabel>
+              <InputLabel id="select-ing-label">Ingeniería *</InputLabel>
               <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
+                labelId="select-ing-label"
+                id="select-ing-select"
                 value={ing}
                 onChange={handleIng}
-
-                // label="Seleccion de periodo"
               >
                 <MenuItem value={""}>Ninguno</MenuItem>
                 <MenuItem value={"electromechanical"}>Electromecánica</MenuItem>
@@ -110,16 +97,12 @@ const ChartBarControls = ({ fetchDashboard }) => {
           </Grid>
           <Grid item xs={6} md={6} lg={3}>
             <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
-              <InputLabel id="demo-simple-select-standard-label">
-                Grupo *
-              </InputLabel>
+              <InputLabel id="select-grade-label">Grado *</InputLabel>
               <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
+                labelId="select-grade-label"
+                id="select-grade-select"
                 value={grade}
                 onChange={handleGrade}
-
-                // label="Seleccion de periodo"
               >
                 <MenuItem value={""}>Ninguno</MenuItem>
                 <MenuItem value={1}>1</MenuItem>
@@ -133,16 +116,12 @@ const ChartBarControls = ({ fetchDashboard }) => {
           </Grid>
           <Grid item xs={6} md={6} lg={3}>
             <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
-              <InputLabel id="demo-simple-select-standard-label">
-                Grado *
-              </InputLabel>
+              <InputLabel id="select-group-label">Grupo *</InputLabel>
               <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
+                labelId="select-group-label"
+                id="select-group-select"
                 value={group}
                 onChange={handleGroup}
-
-                // label="Seleccion de periodo"
               >
                 <MenuItem value={""}>Ninguno</MenuItem>
                 <MenuItem value={"A"}>A</MenuItem>
@@ -152,16 +131,12 @@ const ChartBarControls = ({ fetchDashboard }) => {
           </Grid>
           <Grid item xs={6} md={6} lg={6}>
             <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
-              <InputLabel id="demo-simple-select-standard-label">
-                Materia *
-              </InputLabel>
+              <InputLabel id="select-subject-label">Materia *</InputLabel>
               <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
+                labelId="select-subject-label"
+                id="select-subject-label-select"
                 value={subject}
                 onChange={handleSubject}
-
-                // label="Seleccion de periodo"
               >
                 <MenuItem value={""}>Ninguno</MenuItem>
                 <MenuItem value={"physical"}>Física</MenuItem>

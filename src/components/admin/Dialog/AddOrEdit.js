@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Button,
   TextField,
@@ -7,22 +7,23 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { updateUser, createUser } from "../../utils/firebaseStorage";
-import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/router";
+import { updateUser, createUser } from "../../../utils/firebaseStorage";
+import { useFormik } from "formik";
+import { LoadingButton } from "@mui/lab";
 
 export default function TableAdd({
   open,
   handleClose,
+  query,
   preview,
   change,
-  query,
 }) {
-  const [isEdit, setIsEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    if (open && preview) {
-      setIsEdit(true);
+    console.log({ preview });
+    if (preview) {
       formik.setValues(
         {
           fname: preview.fname,
@@ -35,14 +36,23 @@ export default function TableAdd({
         false
       );
     }
-  }, [open]);
+  }, [formik, preview]);
+
+  const isEdit = useMemo(() => {
+    return !preview ? true : false;
+  }, [preview]);
+
+  const handleCloseWithReset = () => {
+    handleClose();
+    formik.resetForm();
+  };
 
   const formik = useFormik({
     initialValues: {
       fname: "",
       lname: "",
-      contact_add: "",
       age: "",
+      contact_add: "",
       email: "",
     },
     validationSchema: Yup.object({
@@ -52,54 +62,66 @@ export default function TableAdd({
       lname: Yup.string()
         .max(20, "Must be 20 characters or less")
         .required("Required"),
+      age: Yup.number()
+        .min(18, "Debe de ser mayor de edad")
+        .max(100, "Must be 100 or less")
+        .required("Required"),
       contact_add: Yup.number()
         .typeError("Amount must be a number")
         .required("Please supply your number")
         .test("len", "Must be exactly 10 characters", (val) =>
           val ? val.toString().length === 10 : true
         ),
-      age: Yup.number()
-        .typeError("Amount must be a number")
-        .required("Please supply your age")
-        .min(18, "You must be at least 18 years")
-        .max(100, "You're too old"),
       email: Yup.string()
         .email("Invalid email address")
         .required("Required"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log({ values });
+      setLoading(true);
       if (open && preview) {
-        updateUser(preview.email, values).then(() => {
-          handleClose();
-          resetForm();
-          change(query);
-        });
+        console.log("update");
+        updateUser(preview.email, values)
+          .then(() => {
+            handleClose();
+            resetForm();
+            change(query);
+            setLoading(false);
+          })
+          .catch((elem) => {
+            console.log(elem);
+            setLoading(false);
+          });
       } else {
-        createUser({ ...values, role: query }).then(() => {
+        const password = Math.random()
+          .toString(36)
+          .slice(-8);
+
+        createUser({
+          ...values,
+          role: query,
+          initialPassword: password,
+        }).then(() => {
           handleClose();
           resetForm();
           change(query);
+          setLoading(false);
         });
       }
     },
   });
 
-  console.log({ preview, query });
-
   return (
     <div>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open}>
         <form onSubmit={formik.handleSubmit}>
           <DialogTitle>
-            {open && preview ? "Modificar Usuario" : "Agregar Usuario"}
+            {isEdit ? "Modificar Usuario" : "Agregar Usuario"}
           </DialogTitle>
           <DialogContent>
             <TextField
-              autoFocus
               margin="dense"
-              id="fname"
-              label="Nombre"
+              id="nombre"
+              label="Nombres"
               type="text"
               fullWidth
               variant="standard"
@@ -110,7 +132,7 @@ export default function TableAdd({
             <TextField
               margin="dense"
               id="lname"
-              label="Apellido"
+              label="Apellidos"
               type="text"
               fullWidth
               variant="standard"
@@ -118,22 +140,6 @@ export default function TableAdd({
               helperText={formik.touched.lname && formik.errors.lname}
               {...formik.getFieldProps("lname")}
             />
-            <TextField
-              margin="dense"
-              id="contact_add"
-              label="Numero"
-              type="number"
-              fullWidth
-              variant="standard"
-              error={
-                formik.touched.contact_add && Boolean(formik.errors.contact_add)
-              }
-              helperText={
-                formik.touched.contact_add && formik.errors.contact_add
-              }
-              {...formik.getFieldProps("contact_add")}
-            />
-
             <TextField
               margin="dense"
               id="age"
@@ -145,12 +151,27 @@ export default function TableAdd({
               helperText={formik.touched.age && formik.errors.age}
               {...formik.getFieldProps("age")}
             />
-            {!isEdit && (
+            <TextField
+              margin="dense"
+              id="contact"
+              label="Contacto"
+              type="number"
+              fullWidth
+              variant="standard"
+              error={
+                formik.touched.contact_add && Boolean(formik.errors.contact_add)
+              }
+              helperText={
+                formik.touched.contact_add && formik.errors.contact_add
+              }
+              {...formik.getFieldProps("contact_add")}
+            />
+            {isEdit && (
               <TextField
                 margin="dense"
                 id="email"
-                label="Email"
-                type="text"
+                label="Correo"
+                type="email"
                 fullWidth
                 variant="standard"
                 error={formik.touched.email && Boolean(formik.errors.email)}
@@ -158,31 +179,12 @@ export default function TableAdd({
                 {...formik.getFieldProps("email")}
               />
             )}
-            {/* <Box
-              sx={{
-                "& .MuiTextField-root": { width: "100%" },
-              }}
-            >
-              <TextField
-                id="outlined-select-currency"
-                select
-                label="Role"
-                variant="standard"
-                error={formik.touched.role && Boolean(formik.errors.role)}
-                helperText={formik.touched.role && formik.errors.role}
-                {...formik.getFieldProps("role")}
-              >
-                {roles.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Box> */}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Subscribe</Button>
+            <Button onClick={handleCloseWithReset}>Cancel</Button>
+            <LoadingButton type="submit" loading={loading}>
+              Añadir
+            </LoadingButton>
           </DialogActions>
         </form>
       </Dialog>

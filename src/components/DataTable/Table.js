@@ -18,10 +18,12 @@ import {
 } from "@mui/material";
 
 import { visuallyHidden } from "@mui/utils";
+
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
+import PasswordField from "../../components/DataTable/PasswordField";
+
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import PasswordIcon from "@mui/icons-material/Password";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,7 +64,6 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort,
     infoProps,
-    loading,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -74,8 +75,8 @@ function EnhancedTableHead(props) {
     const labels = headLabels[index];
     const info = {
       id: cell,
-      numeric: cell === "actions" ? true : false,
-      disablePadding: cell === "id" ? true : false,
+      numeric: cell === "actions",
+      disablePadding: cell === "id",
       label: labels,
     };
 
@@ -93,7 +94,6 @@ function EnhancedTableHead(props) {
             inputProps={{
               "aria-label": "select all desserts",
             }}
-            disabled={loading}
           />
           {/* <Skeleton variant="text" /> */}
         </TableCell>
@@ -110,11 +110,15 @@ function EnhancedTableHead(props) {
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
+              sx={{ position: "relative" }}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                <Box
+                  component="span"
+                  sx={(visuallyHidden, { position: "absolute" })}
+                >
+                  {/* {order === "desc" ? "sorted descending" : "sorted ascending"} */}
                 </Box>
               ) : null}
             </TableSortLabel>
@@ -135,72 +139,22 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const DataLoader = ({ isSiiMain }) => {
-  const data3 = [[], [], [], [], [], []];
-  return data3.map((elem, index) => (
-    <TableRow key={index}>
-      <TableCell padding="checkbox">
-        <Checkbox disabled={false} />
-      </TableCell>
-      <TableCell component="th" scope="row" padding="none">
-        <Skeleton variant="text" />
-      </TableCell>
-      <TableCell>
-        <Skeleton variant="text" />
-      </TableCell>
-      <TableCell>
-        <Skeleton variant="text" />
-      </TableCell>
-      <TableCell>
-        <Skeleton variant="text" />
-      </TableCell>
-      <TableCell>
-        <Skeleton variant="text" />
-      </TableCell>
-      <TableCell>
-        <Skeleton variant="text" />
-      </TableCell>
-      <TableCell>
-        <Skeleton variant="text" />
-      </TableCell>
-      <TableCell>
-        <Skeleton variant="text" />
-      </TableCell>
-
-      {!isSiiMain ? (
-        <TableCell align="center">
-          <Button>
-            <Skeleton variant="text" sx={{ width: "30px" }} />
-          </Button>
-          <Button color="secondary">
-            <Skeleton variant="text" sx={{ width: "30px" }} />
-          </Button>
-        </TableCell>
-      ) : (
-        <TableCell align="left">
-          <Button>
-            <Skeleton variant="text" />
-          </Button>
-        </TableCell>
-      )}
-    </TableRow>
-  ));
-};
-
 export default function EnhancedTable({
   data,
   infoProps,
-  isSiiMain,
-  loading,
+  isSIIMain = false,
   change,
   handleClickOpenDelete,
   handleClickOpenEditor,
+  handleClickOpenRanks,
 }) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("id");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  console.log({ data });
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -267,55 +221,66 @@ export default function EnhancedTable({
           onRequestSort={handleRequestSort}
           rowCount={data.length}
           infoProps={infoProps}
-          loading={loading}
         />
         <TableBody>
           {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-          {!loading ? (
-            stableSort(data, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                const isItemSelected = isSelected(row.id);
-                const labelId = `enhanced-table-checkbox-${index}`;
+          {stableSort(data, getComparator(order, orderBy))
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((row, index) => {
+              const isItemSelected = isSelected(row.id);
+              const labelId = `enhanced-table-checkbox-${index}`;
 
-                return (
-                  <TableRow
-                    hover
-                    // role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        onClick={(event) => handleClick(event, row.id)}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell component="th" id={labelId} scope="row">
-                      {row.fname}
-                    </TableCell>
-                    <TableCell>{row.lname}</TableCell>
-                    <TableCell>{row.age}</TableCell>
-                    <TableCell>{row.contact_add}</TableCell>
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>•••••••</TableCell>
-                    {!isSiiMain ? (
+              return (
+                <TableRow
+                  hover
+                  // role="checkbox"
+                  aria-checked={isItemSelected}
+                  tabIndex={-1}
+                  key={row.email}
+                  selected={isItemSelected}
+                >
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      color="primary"
+                      checked={isItemSelected}
+                      onClick={(event) => handleClick(event, row.id)}
+                      inputProps={{
+                        "aria-labelledby": labelId,
+                      }}
+                    />
+                  </TableCell>
+
+                  {isSIIMain ? (
+                    <>
+                      <TableCell component="th" id={labelId} scope="row">
+                        {row.email}
+                      </TableCell>
+                      <TableCell>{row.fname}</TableCell>
+                      <TableCell>{row.lname}</TableCell>
+                      <TableCell>{row.age}</TableCell>
+                      <TableCell>{row.contact_add}</TableCell>
+                      <TableCell align="center">
+                        <Button onClick={() => handleClickOpenRanks(row)}>
+                          <SchoolOutlinedIcon fontSize="medium" />
+                        </Button>
+                      </TableCell>
+                    </>
+                  ) : (
+                    <>
+                      <TableCell component="th" id={labelId} scope="row">
+                        {row.fname}
+                      </TableCell>
+                      <TableCell>{row.lname}</TableCell>
+                      <TableCell>{row.age}</TableCell>
+                      <TableCell>{row.contact_add}</TableCell>
+                      <TableCell>{row.email}</TableCell>
+                      <TableCell>
+                        <PasswordField password={row.initialPassword} />
+                      </TableCell>
                       <TableCell align="center">
                         <Button onClick={() => handleClickOpenEditor(row)}>
                           <EditOutlinedIcon fontSize="small" />
-                        </Button>
-                        <Button
-                          onClick={() => handleClickOpenDelete(row)}
-                          color="secondary"
-                        >
-                          <PasswordIcon fontSize="small" />
                         </Button>
                         <Button
                           color="warning"
@@ -324,19 +289,12 @@ export default function EnhancedTable({
                           <CloseOutlinedIcon fontSize="small" />
                         </Button>
                       </TableCell>
-                    ) : (
-                      <TableCell align="left" sx={{ pl: 4.5 }}>
-                        <Button>
-                          <SchoolOutlinedIcon fontSize="medium" />
-                        </Button>
-                      </TableCell>
-                    )}
-                  </TableRow>
-                );
-              })
-          ) : (
-            <DataLoader isSiiMain={isSiiMain} loading={loading} />
-          )}
+                    </>
+                  )}
+                  {/*  */}
+                </TableRow>
+              );
+            })}
           {emptyRows > 0 && (
             <TableRow
               style={{
@@ -349,16 +307,14 @@ export default function EnhancedTable({
         </TableBody>
         <TableFooter>
           <TableRow>
-            {!loading && (
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                count={data.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            )}
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              count={data.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </TableRow>
         </TableFooter>
       </Table>

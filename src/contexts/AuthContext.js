@@ -9,6 +9,7 @@ import {
   updatePassword,
   onAuthStateChanged,
 } from "firebase/auth";
+import { SelectPage } from "../utils";
 
 import { auth } from "../services/client";
 
@@ -20,6 +21,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [pages, setPages] = useState("");
   const [loading, setLoading] = useState(true);
 
   function signup(email, password) {
@@ -49,7 +51,31 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      setLoading(false);
+
+      if (user === null) {
+        setLoading(false);
+      }
+      user
+        ?.getIdToken()
+        .then((elem) =>
+          fetch("/api/roles", {
+            method: "POST",
+            headers: new Headers({
+              "Content-Type": "application/json",
+              Authorization: elem,
+            }),
+          })
+        )
+        .then((result) => result.json())
+        .then((result) => {
+          const role = SelectPage(result.role);
+          setPages(role);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          setLoading(false);
+        });
     });
 
     return unsubscribe;
@@ -63,6 +89,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmailF,
     updatePasswordF,
+    pages,
   };
 
   return (

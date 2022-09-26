@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useAuth } from "../../../contexts/AuthContext";
-import { Grid } from "@mui/material";
 import { getCourses } from "../../../utils/firebaseStorage";
 import { AppLayout, Table } from "../../../components";
 import useAuthPage from "../../../hooks/useAuthPage";
+import { Grid } from "@mui/material";
 
 export default function SiiView() {
   const [data, setData] = useState([]);
@@ -14,12 +12,12 @@ export default function SiiView() {
 
   const additionalLabels = ["Materia", "U1", "U2", "U3", "U4", "U5", "U6"];
 
-  const user = useAuthPage();
+  const { currentUser, pageLoading } = useAuthPage("SIIView");
 
   useEffect(() => {
-    if (user) {
+    if (currentUser) {
       setLoading(true);
-      getCourses(user.email)
+      getCourses(currentUser.email)
         .then((data) => {
           setLoading(false);
           setData(data);
@@ -29,9 +27,9 @@ export default function SiiView() {
           console.error(err);
         });
     }
-  }, [user]);
+  }, [currentUser]);
 
-  if (loading) {
+  if (pageLoading) {
     return null;
   }
 

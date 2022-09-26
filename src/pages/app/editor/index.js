@@ -1,43 +1,43 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useAuth } from "../../../contexts/AuthContext";
-import { Grid, Pagination } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { getPostFeed } from "../../../utils/firebaseStorage";
+import useAuthPage from "../../../hooks/useAuthPage";
 import {
   AppLayout,
   FakeData,
   FeaturedPost,
-  DEditor,
+  DialogEditor,
 } from "../../../components";
 
-const Media = ({ loading, data }) => {
+const Media = ({ loading, data, handleEdition }) => {
   if (loading) {
     return <FakeData />;
   }
+
   return (
     <>
       {data.map((post, id) => (
-        <FeaturedPost key={id} post={post} loading={loading} />
+        <FeaturedPost key={id} post={post} editPost={handleEdition} />
       ))}
     </>
   );
 };
 
 export default function Editor() {
-  const { currentUser } = useAuth();
   const [data, setData] = useState([]);
-  const [error, setError] = useState(0);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [editPost, setEditPost] = useState();
+
+  const { currentUser, pageLoading } = useAuthPage("Editor");
 
   useEffect(() => {
-    !currentUser && router.replace("/log/login");
     if (currentUser) {
       fetchPost();
     }
-  }, [currentUser, router]);
+  }, [currentUser]);
 
-  const fetchPost = async () => {
+  const fetchPost = () => {
     setLoading(true);
     getPostFeed()
       .then((response) => {
@@ -49,12 +49,43 @@ export default function Editor() {
         console.error(error);
       });
   };
+
+  const handleClickOpen = () => {
+    setEditPost(null);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleEdition = (post) => {
+    handleClickOpen();
+    setEditPost(post);
+    console.log({ post });
+  };
+
+  if (pageLoading) {
+    return null;
+  }
+
   return (
     <Grid container spacing={3}>
       {/* Posts */}
-      <Media data={data} loading={loading} />
+      <Media
+        data={data}
+        loading={loading}
+        open={open}
+        handleEdition={handleEdition}
+      />
       {/* button */}
-      <DEditor />
+      <DialogEditor
+        fetchPost={fetchPost}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+        open={open}
+        editPost={editPost}
+      />
     </Grid>
   );
 }

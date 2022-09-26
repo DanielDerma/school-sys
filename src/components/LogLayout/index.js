@@ -20,7 +20,8 @@ export default function SignInSide({ children }) {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage:
+              "url(https://www.excelhighschool.com/wp-content/uploads/2016/08/excel_about.jpg)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"

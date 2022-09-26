@@ -9,20 +9,21 @@ const CharN = ({ data, loading }) => {
       sx={{
         p: 2,
         height: "100%",
+        position: "relative",
       }}
     >
-      <Typography sx={{ display: "inline" }} component="h2">
-        {data.name ? "Maestra: " + data.name : <Skeleton />}
+      <Typography component="h2">
+        {data.name ? "Maestro: " + data.name : <Skeleton />}
+      </Typography>
+      <Typography component="h2">
+        {data.number ? "Teléfono: " + data.number : <Skeleton />}
       </Typography>
       <IconButton
-        sx={{ display: "inline", ml: 16 }}
+        sx={{ position: "absolute", top: 15, right: 15 }}
         onClick={() => (window.location = "mailto:yourmail@gmail.com")}
       >
         {loading ? <></> : <AlternateEmailIcon />}
       </IconButton>
-      <Typography sx={{ display: "inline" }} component="h2">
-        {data.number ? "Teléfono: " + data.number : <Skeleton />}
-      </Typography>
     </Paper>
   );
 };

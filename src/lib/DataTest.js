@@ -300,34 +300,14 @@ export const infoPropsStudent = {
     "Nombre",
     "Apellidos",
     "Edad",
-    "Telefono",
+    "Teléfono",
     "Email",
-    "initialPassword",
+    "Contraseña Inicial",
     "Acciones",
   ],
 };
 
 export const infoPropsInstructor = {
-  headId: [
-    "id",
-    "first_name",
-    "last_name",
-    "gender",
-    "age",
-    "contact_add",
-    "ins_email",
-    "ins_pass",
-    "actions",
-  ],
-  headLabels: [
-    "ID",
-    "Nombre",
-    "Apellidos",
-    "Genero",
-    "Edad",
-    "Telefono",
-    "Email",
-    "Clave",
-    "Acciones",
-  ],
+  headId: ["email", "fname", "lname", "age", "contact_add", "actions"],
+  headLabels: ["Email", "Nombre", "Apellido", "Edad", "Teléfono", "Acciones"],
 };

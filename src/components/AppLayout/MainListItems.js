@@ -11,32 +11,26 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import SchoolIcon from "@mui/icons-material/School";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
+import { useAuth } from "../../contexts/AuthContext";
+import { Capitalize } from "../../utils";
 
-export const MainListItems = () => {
+const MainListItems = () => {
   const router = useRouter();
-  // get the last word of the pathname
-  const pathname = router.pathname.split("/").pop().toLowerCase();
-  //capitalize var pathname
-  const capitalize = (s) => {
-    if (typeof s !== "string") return "";
-    if (s === "siimain") return "SIIMain";
-    if (s === "siiview") return "SIIView";
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  };
-  const capitalizePathname = capitalize(pathname);
+  const { pages } = useAuth();
+
+  const pathname = router.pathname
+    .split("/")
+    .pop()
+    .toLowerCase();
+
+  const capitalizePathname = Capitalize(pathname);
   const [focus, setFocus] = useState(capitalizePathname);
-  const btns = [
-    "Account",
-    "Admin",
-    "Dashboard",
-    "Editor",
-    "SIIMain",
-    "SIIView",
-  ];
+
+  const BTNs = ["Account", pages];
 
   return (
     <>
-      {btns.map((btn) => {
+      {BTNs.map((btn) => {
         if (focus === btn) {
           return (
             <ListItem button key={btn.toLowerCase()}>
@@ -80,3 +74,5 @@ export const MainListItems = () => {
     </>
   );
 };
+
+export default MainListItems;
