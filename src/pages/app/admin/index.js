@@ -3,7 +3,6 @@ import Head from "next/head";
 import { AppLayout } from "../../../components";
 import { getCollectionUser } from "../../../utils/firebaseStorage";
 import useAuthPage from "../../../hooks/useAuthPage";
-import TableSkeleton from "../../../components/DataTable/TableSkeleton";
 import DataTable from "../../../components/admin";
 
 const tabsAdmin = [
@@ -49,7 +48,7 @@ export default function Admin() {
 
   useEffect(() => {
     if (currentUser) {
-      handleData("student");
+      handleData(tabsAdmin[0].hash);
     }
   }, [currentUser]);
 
