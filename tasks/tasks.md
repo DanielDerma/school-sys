@@ -1,5 +1,5 @@
 ### 21/09/2022
 
-- [] siimain
+- [x] siimain
+- [x] mobile
 - [] deploy
-- [] mobile
