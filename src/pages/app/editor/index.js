@@ -2,12 +2,8 @@ import { useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import { getPostFeed } from "../../../utils/firebaseStorage";
 import useAuthPage from "../../../hooks/useAuthPage";
-import {
-  AppLayout,
-  FakeData,
-  FeaturedPost,
-  DialogEditor,
-} from "../../../components";
+import { AppLayout, FakeData, FeaturedPost } from "../../../components";
+import DialogEditor from "../../../components/Dialog/Editor";
 
 const Media = ({ loading, data, handleEdition }) => {
   if (loading) {

@@ -2,7 +2,8 @@ let admin = require("firebase-admin");
 
 let serviceAccount = {
   type: process.env.ADMIN_TYPE,
-  project_id: process.env.ADMIN_PROJECT_ID,
+  // project_id: process.env.ADMIN_PROJECT_ID,
+  project_id: "prueba1-4ba9d",
   private_key_id: process.env.ADMIN_PRIVATE_KEY_ID,
   private_key: process.env.ADMIN_PRIVATE_KEY,
   client_email: process.env.ADMIN_CLIENT_EMAIL,
