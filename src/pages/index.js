@@ -13,6 +13,6 @@ export default function Home() {
   const router = useRouter();
   useEffect(() => {
     router.replace("/home");
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return <div></div>;
 }

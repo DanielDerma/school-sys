@@ -30,7 +30,9 @@ function MainFeaturedPost(props) {
       }}
     >
       {/* Increase the priority of the hero background image */}
-      {<img style={{ display: "none" }} src={post.img} alt={post.imageText} />}
+      {
+        <img style={{ display: "none" }} src={post.img} alt={post.imageText} /> // eslint-disable-line
+      }
       <Box
         sx={{
           position: "absolute",

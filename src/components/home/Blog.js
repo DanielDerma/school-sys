@@ -25,7 +25,7 @@ export default function Blog() {
 
   useEffect(() => {
     handleCount();
-  }, []);
+  }, []); //  eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCount = () => {
     setLoading(true);

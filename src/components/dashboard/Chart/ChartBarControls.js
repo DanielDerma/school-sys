@@ -23,7 +23,7 @@ const ChartBarControls = ({ handleData }) => {
       const timeslap = `${time}_${ing}_${subject}_${grade}_${group}`;
       handleData(timeslap);
     }
-  }, [time, ing, subject, grade, group]);
+  }, [time, ing, subject, grade, group]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleTime = (event) => {
     setTime(event.target.value);

@@ -50,7 +50,7 @@ function CheckboxList({ data, changeRadarParams, loading }) {
 
   useEffect(() => {
     changeRadarParams(checked);
-  }, [checked]);
+  }, [checked]); //eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
     return (

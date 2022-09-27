@@ -46,7 +46,7 @@ export default function EditorRN({
       setUid(uid);
       formik.setValues(preview, false);
     }
-  }, [editPost, open]);
+  }, [editPost, open]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const formik = useFormik({
     initialValues: {
