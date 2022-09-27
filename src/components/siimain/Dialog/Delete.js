@@ -8,7 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { deleteUser } from "../../../utils/firebaseStorage";
+import { deleteCourse } from "../../../utils/firebaseStorage";
 
 export default function TableDelete({
   open,
@@ -28,7 +28,7 @@ export default function TableDelete({
   };
 
   const handleSubmit = () => {
-    deleteUser(preview.email).then(() => {
+    deleteCourse(preview.email, query).then(() => {
       setConfirm(true);
       handleClose();
       change(query);

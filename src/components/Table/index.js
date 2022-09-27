@@ -6,12 +6,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Skeleton } from "@mui/material";
+import { courseReadable } from "../../utils";
 
 export default function BasicTable({
   loading,
   data,
-  labels,
   additionalLabels,
+  labels,
   isSiiView,
 }) {
   if (!data) {
@@ -46,11 +47,11 @@ export default function BasicTable({
             ) : (
               <>
                 {data.map((row, i) => {
-                  const headT = labels[i];
+                  const id = courseReadable(row.id);
                   return (
-                    <TableRow key={row.mote}>
+                    <TableRow key={row.id}>
                       <TableCell component="th" scope="row">
-                        {headT}
+                        {id}
                       </TableCell>
                       <TableCell>{row.ranks.u1}</TableCell>
                       <TableCell>{row.ranks.u2}</TableCell>

@@ -8,12 +8,18 @@ import {
   DialogTitle,
 } from "@mui/material";
 import * as Yup from "yup";
-import { updateUser, createUser } from "../../../utils/firebaseStorage";
+import { updateCourse, createCourse } from "../../../utils/firebaseStorage";
 import { useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
+import {
+  createCourseInitialValues,
+  createCourseValidationSchema,
+  generateInputs,
+} from "../../../utils/dataTableValidation";
 
 export default function TableAdd({
   open,
+  nUnit,
   handleClose,
   query,
   preview,
@@ -24,22 +30,12 @@ export default function TableAdd({
   useEffect(() => {
     console.log({ preview });
     if (preview) {
-      formik.setValues(
-        {
-          fname: preview.fname,
-          lname: preview.lname,
-          contact_add: preview.contact_add,
-          age: preview.age,
-          role: preview.role,
-          email: preview.email,
-        },
-        false
-      );
+      formik.setValues({ ...preview.ranks, email: preview.email }, false);
     }
   }, [formik, preview]);
 
   const isEdit = useMemo(() => {
-    return !preview ? true : false;
+    return preview;
   }, [preview]);
 
   const handleCloseWithReset = () => {
@@ -48,39 +44,15 @@ export default function TableAdd({
   };
 
   const formik = useFormik({
-    initialValues: {
-      fname: "",
-      lname: "",
-      age: "",
-      contact_add: "",
-      email: "",
-    },
-    validationSchema: Yup.object({
-      fname: Yup.string()
-        .max(15, "Must be 15 characters or less")
-        .required("Required"),
-      lname: Yup.string()
-        .max(20, "Must be 20 characters or less")
-        .required("Required"),
-      age: Yup.number()
-        .min(18, "Debe de ser mayor de edad")
-        .max(100, "Must be 100 or less")
-        .required("Required"),
-      contact_add: Yup.number()
-        .typeError("Amount must be a number")
-        .required("Please supply your number")
-        .test("len", "Must be exactly 10 characters", (val) =>
-          val ? val.toString().length === 10 : true
-        ),
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Required"),
-    }),
+    initialValues: createCourseInitialValues(nUnit),
+    validationSchema: createCourseValidationSchema(nUnit),
     onSubmit: (values, { resetForm }) => {
       setLoading(true);
-      if (open && preview) {
-        console.log("update");
-        updateUser(preview.email, values)
+
+      if (preview) {
+        const { email, ...ranks } = values;
+        console.log({ ranks, email });
+        updateCourse(email, ranks, query)
           .then(() => {
             handleClose();
             resetForm();
@@ -92,15 +64,8 @@ export default function TableAdd({
             setLoading(false);
           });
       } else {
-        const password = Math.random()
-          .toString(36)
-          .slice(-8);
-
-        createUser({
-          ...values,
-          role: query,
-          initialPassword: password,
-        }).then(() => {
+        const { email, ...ranks } = values;
+        createCourse(email, ranks, query).then(() => {
           handleClose();
           resetForm();
           change(query);
@@ -110,6 +75,8 @@ export default function TableAdd({
     },
   });
 
+  console.log({ formik });
+
   return (
     <div>
       <Dialog open={open}>
@@ -118,55 +85,22 @@ export default function TableAdd({
             {isEdit ? "Modificar Usuario" : "Agregar Usuario"}
           </DialogTitle>
           <DialogContent>
-            <TextField
-              margin="dense"
-              id="nombre"
-              label="Nombres"
-              type="text"
-              fullWidth
-              variant="standard"
-              error={formik.touched.fname && Boolean(formik.errors.fname)}
-              helperText={formik.touched.fname && formik.errors.fname}
-              {...formik.getFieldProps("fname")}
-            />
-            <TextField
-              margin="dense"
-              id="lname"
-              label="Apellidos"
-              type="text"
-              fullWidth
-              variant="standard"
-              error={formik.touched.lname && Boolean(formik.errors.lname)}
-              helperText={formik.touched.lname && formik.errors.lname}
-              {...formik.getFieldProps("lname")}
-            />
-            <TextField
-              margin="dense"
-              id="age"
-              label="Edad"
-              type="number"
-              fullWidth
-              variant="standard"
-              error={formik.touched.age && Boolean(formik.errors.age)}
-              helperText={formik.touched.age && formik.errors.age}
-              {...formik.getFieldProps("age")}
-            />
-            <TextField
-              margin="dense"
-              id="contact"
-              label="Contacto"
-              type="number"
-              fullWidth
-              variant="standard"
-              error={
-                formik.touched.contact_add && Boolean(formik.errors.contact_add)
-              }
-              helperText={
-                formik.touched.contact_add && formik.errors.contact_add
-              }
-              {...formik.getFieldProps("contact_add")}
-            />
-            {isEdit && (
+            {generateInputs(nUnit).map((elem) => (
+              <TextField
+                key={elem}
+                margin="dense"
+                id="nombre"
+                label={elem.toUpperCase()}
+                type="number"
+                fullWidth
+                variant="standard"
+                error={formik.touched[elem] && Boolean(formik.errors[elem])}
+                helperText={formik.touched[elem] && formik.errors[elem]}
+                {...formik.getFieldProps(elem)}
+              />
+            ))}
+
+            {!isEdit && (
               <TextField
                 margin="dense"
                 id="email"

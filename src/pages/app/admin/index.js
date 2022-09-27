@@ -67,6 +67,7 @@ export default function Admin() {
         data={data}
         loading={loading}
         change={(e) => handleData(e)}
+        isSIIMain={false}
       />
     </>
   );

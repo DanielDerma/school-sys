@@ -23,3 +23,8 @@ export const SelectSubject = (s) => {
 
 export const dataFormatted = (date) =>
   date.toDate().toLocaleDateString("es-ES");
+
+export const courseReadable = (s) => {
+  const [, , subject, grade, group] = s.split("_");
+  return `${Capitalize(subject)} ${grade}° ${group}`;
+};

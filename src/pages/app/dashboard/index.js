@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Grid, Paper, Skeleton } from "@mui/material";
-import { dataFormatted } from "../../../utils/dashboardFormat";
+import { dataFormatted, dataForRadar } from "../../../utils/dashboardFormat";
 import { GridController } from "../../../components";
 import useAuthPage from "../../../hooks/useAuthPage";
 import { getCollectionClass } from "../../../utils/firebaseStorage";
@@ -28,6 +28,7 @@ export default function Dashboard() {
     try {
       if (currentUser) {
         const data = await getCollectionClass(type);
+        console.log({ data });
         setData(data.resultSort);
         setDataTeacher(data.teacher);
         setLoading(false);
@@ -40,21 +41,20 @@ export default function Dashboard() {
     }
   };
 
-  const chart = useMemo(() => dataFormatted(data, radarParams), [
-    data,
-    radarParams,
-  ]);
+  const chart = useMemo(() => dataFormatted(data), [data]);
+  const radar = useMemo(() => dataForRadar(data, radarParams), [radarParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (pageLoading) {
     return <></>;
   }
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} lg={4} sx={{ p: 0, m: 0 }}>
         <CharN data={dataTeacher} loading={loading} />
       </Grid>
       <Grid item xs={12} lg={4}>
-        <ChartNumbers loading={loading} meanFormatted={chart.mean} />
+        <ChartNumbers loading={loading} meanFormatted={chart?.mean} />
       </Grid>
       <GridController item xs={12} lg={4}>
         <ChartBarControls handleData={handleData} />
@@ -72,7 +72,7 @@ export default function Dashboard() {
           {loading ? (
             <Skeleton sx={{ height: "100%" }} />
           ) : (
-            <ChartBar data={chart.filterDataBarC} />
+            <ChartBar data={chart.filterDataBar} />
           )}
         </Paper>
       </Grid>
@@ -106,7 +106,7 @@ export default function Dashboard() {
           {loading ? (
             <Skeleton sx={{ width: "50%" }} />
           ) : (
-            <ChartRadar data={chart.polarUser} />
+            <ChartRadar data={radar.polarUser} />
           )}
         </Paper>
       </Grid>

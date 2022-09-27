@@ -8,9 +8,17 @@ export default function SiiView() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const labelsAccount = ["Matemática", "Español", "Fisica"];
-
-  const additionalLabels = ["Materia", "U1", "U2", "U3", "U4", "U5", "U6"];
+  const additionalLabels = [
+    "Materia",
+    "U1",
+    "U2",
+    "U3",
+    "U4",
+    "U5",
+    "U6",
+    "U7",
+    "U8",
+  ];
 
   const { currentUser, pageLoading } = useAuthPage("SIIView");
 
@@ -29,6 +37,8 @@ export default function SiiView() {
     }
   }, [currentUser]);
 
+  console.log({ data });
+
   if (pageLoading) {
     return null;
   }
@@ -38,7 +48,6 @@ export default function SiiView() {
       <Grid item xs={9}>
         <Table
           loading={loading}
-          labels={labelsAccount}
           additionalLabels={additionalLabels}
           data={data}
           isSiiView

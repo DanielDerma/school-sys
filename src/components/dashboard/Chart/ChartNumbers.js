@@ -15,7 +15,13 @@ const ChartNumbers = ({ meanFormatted, loading }) => {
       <Box sx={{ textAlign: "center", maxHeight: "168px" }}>
         <Typography>{loading ? <Skeleton /> : "Promedio del Grupo"}</Typography>
         <Typography sx={{ fontSize: "100px", color: "#94BFE5" }}>
-          {loading ? <Skeleton /> : meanFormatted}
+          {loading ? (
+            <Skeleton />
+          ) : !isNaN(parseFloat(meanFormatted)) ? (
+            meanFormatted
+          ) : (
+            0
+          )}
         </Typography>
       </Box>
     </Paper>

@@ -13,10 +13,10 @@ const CharN = ({ data, loading }) => {
       }}
     >
       <Typography component="h2">
-        {data.name ? "Maestro: " + data.name : <Skeleton />}
+        {!loading ? "Maestro: " + data.name : <Skeleton />}
       </Typography>
       <Typography component="h2">
-        {data.number ? "Teléfono: " + data.number : <Skeleton />}
+        {!loading ? "Teléfono: " + data.number : <Skeleton />}
       </Typography>
       <IconButton
         sx={{ position: "absolute", top: 15, right: 15 }}

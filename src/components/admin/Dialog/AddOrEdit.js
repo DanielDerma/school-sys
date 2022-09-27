@@ -112,10 +112,10 @@ export default function TableAdd({
 
   return (
     <div>
-      <Dialog open={open}>
+      <Dialog open={open} onClose={handleCloseWithReset}>
         <form onSubmit={formik.handleSubmit}>
           <DialogTitle>
-            {isEdit ? "Modificar Usuario" : "Agregar Usuario"}
+            {!isEdit ? "Modificar Usuario" : "Agregar Usuario"}
           </DialogTitle>
           <DialogContent>
             <TextField

@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material";
 import * as Yup from "yup";
 
 export const createCourseInitialValues = (nUnit) => {
@@ -25,39 +24,6 @@ export const createCourseValidationSchema = (nUnit) => {
   return Yup.object().shape(objUnit);
 };
 
-// const Inputs = () =>
-//   values.map((value) => (
-//     <TextField
-//       key={value}
-//       margin="dense"
-//       id="contact_add"
-//       label={`Unit ${value}`}
-//       type="number"
-//       fullWidth
-//       variant="standard"
-//       error={formik.touched[value] && Boolean(formik.errors[value])}
-//       helperText={formik.touched[value] && formik.errors[value]}
-//       {...formik.getFieldProps(value)}
-//     />
-//   ));
-
 export const generateInputs = (nUnit) => {
   return Array.from(Array(nUnit), (_, i) => `u${i + 1}`);
-
-  // return (
-  //   <>
-  //     <TextField
-  //       margin="dense"
-  //       id="contact_add"
-  //       label="Numero"
-  //       type="email"
-  //       fullWidth
-  //       variant="standard"
-  //       error={formik.touched.email && Boolean(formik.errors.email)}
-  //       helperText={formik.touched.email && formik.errors.email}
-  //       {...formik.getFieldProps("email")}
-  //     />
-  //     <Inputs values={values} />
-  //   </>
-  // );
 };

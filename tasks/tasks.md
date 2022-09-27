@@ -1,5 +1,5 @@
 ### 21/09/2022
 
-- [] siimain y siiview
-- [] Anadir mucha data
+- [] siimain
 - [] deploy
+- [] mobile

@@ -142,11 +142,10 @@ EnhancedTableHead.propTypes = {
 export default function EnhancedTable({
   data,
   infoProps,
-  isSIIMain = false,
+  isSIIMain = true,
   change,
   handleClickOpenDelete,
   handleClickOpenEditor,
-  handleClickOpenRanks,
 }) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("id");
@@ -260,11 +259,6 @@ export default function EnhancedTable({
                       <TableCell>{row.lname}</TableCell>
                       <TableCell>{row.age}</TableCell>
                       <TableCell>{row.contact_add}</TableCell>
-                      <TableCell align="center">
-                        <Button onClick={() => handleClickOpenRanks(row)}>
-                          <SchoolOutlinedIcon fontSize="medium" />
-                        </Button>
-                      </TableCell>
                     </>
                   ) : (
                     <>
@@ -278,20 +272,23 @@ export default function EnhancedTable({
                       <TableCell>
                         <PasswordField password={row.initialPassword} />
                       </TableCell>
-                      <TableCell align="center">
-                        <Button onClick={() => handleClickOpenEditor(row)}>
-                          <EditOutlinedIcon fontSize="small" />
-                        </Button>
-                        <Button
-                          color="warning"
-                          onClick={() => handleClickOpenDelete(row)}
-                        >
-                          <CloseOutlinedIcon fontSize="small" />
-                        </Button>
-                      </TableCell>
                     </>
                   )}
-                  {/*  */}
+                  <TableCell align="center">
+                    <Button onClick={() => handleClickOpenEditor(row)}>
+                      {isSIIMain ? (
+                        <SchoolOutlinedIcon fontSize="small" />
+                      ) : (
+                        <EditOutlinedIcon fontSize="small" />
+                      )}
+                    </Button>
+                    <Button
+                      color="warning"
+                      onClick={() => handleClickOpenDelete(row)}
+                    >
+                      <CloseOutlinedIcon fontSize="small" />
+                    </Button>
+                  </TableCell>
                 </TableRow>
               );
             })}

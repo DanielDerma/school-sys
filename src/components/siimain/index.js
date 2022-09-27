@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Button, Paper, TableCell } from "@mui/material";
 
 import Table from "../DataTable/Table";
-import { infoPropsStudent } from "../../lib/DataTest";
+import { infoPropsInstructor } from "../../lib/DataTest";
 import FormDialog from "../DataTable/FormDialog";
 import EnhancedTableTabs from "../DataTable/EnhancedTableTabs";
 
@@ -11,7 +11,7 @@ import Delete from "./Dialog/Delete";
 
 import React from "react";
 
-export default function DataTable({ tabsAdmin, data, change, loading }) {
+export default function DataTable({ tabsAdmin, data, change, nUnit, loading }) {
   const [query, setQuery] = useState(tabsAdmin[0].hash);
   const [openEditor, setOpenEditor] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -38,20 +38,26 @@ export default function DataTable({ tabsAdmin, data, change, loading }) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <AddOrEdit
-        open={openEditor}
-        handleClose={handleCloseEditor}
-        query={query}
-        preview={preview}
-        change={change}
-      />
-      <Delete
-        query={query}
-        change={change}
-        open={openDelete}
-        handleClose={handleCloseDelete}
-        preview={preview}
-      />
+      {!loading && (
+        <>
+          <AddOrEdit
+            open={openEditor}
+            nUnit={nUnit}
+            handleClose={handleCloseEditor}
+            query={query}
+            preview={preview}
+            change={change}
+          />
+          <Delete
+            query={query}
+            change={change}
+            open={openDelete}
+            handleClose={handleCloseDelete}
+            preview={preview}
+          />
+        </>
+      )}
+
       <FormDialog handleClickOpenEditor={handleClickOpenEditor} />
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableTabs
@@ -66,10 +72,10 @@ export default function DataTable({ tabsAdmin, data, change, loading }) {
           <Table
             handleClickOpenEditor={handleClickOpenEditor}
             handleClickOpenDelete={handleClickOpenDelete}
-            infoProps={infoPropsStudent}
+            infoProps={infoPropsInstructor}
             change={change}
             data={data}
-            isSIIMain={false}
+            isSIIMain={true}
           />
         )}
       </Paper>

@@ -18,6 +18,8 @@ import {
   startAfter,
   endBefore,
   addDoc,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -41,41 +43,45 @@ export const getCollectionUser = async (role) => {
 };
 
 export const getCollectionClass = async (subject) => {
-  const docRef = doc(firestore, "subject", subject);
-  const response = await getDoc(docRef);
-  const { student: data, refTeacher, numTeacher, nUnit } = response.data();
+  try {
+    const docRef = doc(firestore, "subject", subject);
+    const response = await getDoc(docRef);
+    const { student: data, refTeacher, numTeacher, nUnit } = response.data();
 
-  const collectionClass = data.map(async (user) => {
-    const docRefCourse = doc(firestore, "user", user, "course", subject);
-    const docRefStudent = doc(firestore, "user", user);
-    const response = await getDoc(docRefCourse);
-    const response2 = await getDoc(docRefStudent);
-    const { email, contact_add, fname, lname, age } = response2.data();
+    const collectionClass = data.map(async (user) => {
+      const docRefCourse = doc(firestore, "user", user, "course", subject);
+      const docRefStudent = doc(firestore, "user", user);
+      const response = await getDoc(docRefCourse);
+      const response2 = await getDoc(docRefStudent);
+      const { email, contact_add, fname, lname, age } = response2.data();
 
-    return {
-      email,
-      contact_add,
-      fname,
-      lname,
-      age,
-      subject,
-      ranks: response.data().ranks,
+      return {
+        email,
+        contact_add,
+        fname,
+        lname,
+        age,
+        subject,
+        ranks: response.data().ranks,
+      };
+    });
+
+    const result = await Promise.all(collectionClass);
+
+    const resultSort = result.sort((a, b) =>
+      a.email > b.email ? 1 : b.email > a.email ? -1 : 0
+    );
+
+    const teacher = {
+      name: refTeacher,
+      number: numTeacher,
+      nUnit,
     };
-  });
 
-  const result = await Promise.all(collectionClass);
-
-  const resultSort = result.sort((a, b) =>
-    a.email > b.email ? 1 : b.email > a.email ? -1 : 0
-  );
-
-  const teacher = {
-    name: refTeacher,
-    number: numTeacher,
-    nUnit,
-  };
-
-  return { resultSort, teacher };
+    return { resultSort, teacher };
+  } catch (error) {
+    return { resultSort: [], teacher: {} };
+  }
 };
 
 export const getCourses = async (id) => {
@@ -135,8 +141,12 @@ export const deleteUser = async (email) => {
 
 export const createCourse = async (email, ranks, subject) => {
   const docRef = doc(firestore, "user", email, "course", subject);
+  const docRef2 = doc(firestore, "subject", subject);
   try {
     await setDoc(docRef, { ranks });
+    await updateDoc(docRef2, {
+      student: arrayUnion(email),
+    });
   } catch (err) {
     console.error(err);
   }
@@ -153,8 +163,12 @@ export const updateCourse = async (email, ranks, subject) => {
 
 export const deleteCourse = async (email, subject) => {
   const docRef = doc(firestore, "user", email, "course", subject);
+  const docRef2 = doc(firestore, "subject", subject);
   try {
     await deleteDoc(docRef);
+    await updateDoc(docRef2, {
+      student: arrayRemove(email),
+    });
   } catch (err) {
     console.error(err);
   }

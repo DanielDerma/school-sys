@@ -9,10 +9,12 @@ import {
 import { AppLayout } from "../../../components";
 import DataTable from "../../../components/siimain";
 import useAuthPage from "../../../hooks/useAuthPage";
+import { courseReadable } from "../../../utils";
 
 export default function SiiMain() {
   const [data, setData] = useState([]);
   const [tabsAdmin, setTabsAdmin] = useState("");
+  const [nUnit, setNUnit] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,10 +29,15 @@ export default function SiiMain() {
     setLoading(true);
     try {
       const { refSubject } = await getInfoAccount(type);
-      console.log({ refSubject });
-      const { resultSort, tabsAdmin } = await getCollectionClass(refSubject[0]);
+      console.log("refSubject:", refSubject);
+      const { resultSort, teacher } = await getCollectionClass(refSubject[0]);
+      const RefSubjectObj = refSubject.map((elem) => ({
+        title: courseReadable(elem),
+        hash: elem,
+      }));
+      setTabsAdmin(RefSubjectObj);
       setData(resultSort);
-      setTabsAdmin(refSubject);
+      setNUnit(teacher.nUnit);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -45,6 +52,7 @@ export default function SiiMain() {
   return (
     <>
       <DataTable
+        nUnit={nUnit}
         tabsAdmin={tabsAdmin}
         data={data}
         loading={loading}
